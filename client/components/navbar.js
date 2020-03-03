@@ -4,22 +4,23 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-import {AppBar, Toolbar, Button, TextField} from '@material-ui/core'
+import {AppBar, Toolbar, Button, IconButton, TextField} from '@material-ui/core'
+import HomeRoundedIcon from '@material-ui/icons/HomeRounded'
+import ShoppingBasketTwoToneIcon from '@material-ui/icons/ShoppingBasketTwoTone'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <AppBar>
     <Toolbar>
       <div id="header">
         <div id="home">
-          <img
-            id="slimeIcon"
-            src="https://vignette.wikia.nocookie.net/slimerancher/images/c/c9/Pink_Slime_SecretStyle_SP.png/revision/latest?cb=20190619001120"
-          />
-          <Button component={Link} to="/">
-            Home
-          </Button>
+          <IconButton component={Link} to="/">
+            <img
+              id="slimeIcon"
+              src="https://vignette.wikia.nocookie.net/slimerancher/images/c/c9/Pink_Slime_SecretStyle_SP.png/revision/latest?cb=20190619001120"
+            />
+          </IconButton>
         </div>
-        <Button component={Link} to="/">
+        <Button component={Link} to="/slimes">
           Products
         </Button>
         <TextField
@@ -31,10 +32,10 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         {isLoggedIn ? (
           <div id="login">
             {/* The navbar will show these links after you log in */}
-            <Link to="/home">Account</Link>
-            <a href="#" onClick={handleClick}>
-              Logout
-            </a>
+            <IconButton component={Link} to="/">
+              <HomeRoundedIcon />
+            </IconButton>
+            <Button onClick={handleClick}>Logout</Button>
           </div>
         ) : (
           <div id="login">
@@ -48,6 +49,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             </Button>
           </div>
         )}
+        <IconButton component={Link} to="/">
+          <ShoppingBasketTwoToneIcon fontSize="large" />
+        </IconButton>
       </div>
     </Toolbar>
   </AppBar>

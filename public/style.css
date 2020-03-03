@@ -22,7 +22,7 @@ form div {
 }
 
 #mainBody {
-  flex: 1 0 auto;
+  margin-top: 5em;
 }
 
 #header {
@@ -47,7 +47,7 @@ form div {
 }
 
 #userForm {
-  margin: 5em;
+  margin: 2em;
 }
 
 #footer {
