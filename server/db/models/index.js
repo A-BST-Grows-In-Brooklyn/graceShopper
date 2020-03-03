@@ -1,6 +1,6 @@
 const User = require('./user')
 const Slime = require('./slime')
-
+const Cart = require('./cart')
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:
@@ -17,5 +17,6 @@ const Slime = require('./slime')
 
 module.exports = {
   User,
-  Slime
+  Slime,
+  Cart
 }

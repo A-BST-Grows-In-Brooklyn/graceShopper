@@ -1,7 +1,10 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-import User from './user'
-import Slime from './slime'
+const User = require('./user')
+const Slime = require('./slime')
+
+// import User from './user'
+// import Slime from './slime'
 
 const Cart = db.define('cart', {
   id: {
@@ -30,4 +33,4 @@ const Cart = db.define('cart', {
   }
 })
 
-module.exports = {Cart}
+module.exports = Cart
