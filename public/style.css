@@ -1,5 +1,6 @@
 body {
   font-family: sans-serif;
+  display: flex;
 }
 
 a {
@@ -18,4 +19,40 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+#mainBody {
+  flex: 1 0 auto;
+}
+
+#header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+#slimeIcon {
+  width: 3rem;
+  height: 3rem;
+}
+
+#home {
+  display: flex;
+  align-content: center;
+}
+
+#login {
+  display: flex;
+  align-content: center;
+}
+
+#userForm {
+  margin: 5em;
+}
+
+#footer {
+  background-color: deeppink;
+  width: 100%;
+  height: 10px;
+  flex-shrink: 0;
 }
