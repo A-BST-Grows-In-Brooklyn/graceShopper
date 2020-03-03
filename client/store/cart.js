@@ -1,46 +1,47 @@
 import axios from 'axios'
 
-/**
- * INITIAL STATE
- */
-const intialState = []
+const GET_CART = 'GET_CART'
+// const ADD_TO_CART = 'ADD_TO_CART'
+// const REMOVE_ITEM = 'REMOVE_ITEM'
+// const SUB_QUANTITY = 'SUB_QUANTITY'
+// const ADD_QUANTITY = 'ADD_QUANTITY'
 
-/**
- * ACTION TYPES
- */
-const ADD_TO_CART = 'ADD_TO_CART'
-const REMOVE_ITEM = 'REMOVE_ITEM'
-const SUB_QUANTITY = 'SUB_QUANTITY'
-const ADD_QUANTITY = 'ADD_QUANTITY'
+export const getCart = cart => ({type: GET_CART, cart})
+// export const addItem = itemId => ({type: ADD_TO_CART, itemId})
+// export const removeItem = itemId => ({type: REMOVE_ITEM, itemId})
 
-/**
- * ACTION CREATORS
- */
-export const addItem = itemId => ({type: ADD_TO_CART, itemId})
-export const removeItem = itemId => ({type: REMOVE_ITEM, itemId})
-
-// /**
-//  * THUNK CREATORS
-//  */
-export const addToCart = itemId => {
-  return async (dispatch, next) => {
+export const viewCart = () => {
+  return async dispatch => {
     try {
-      console.log('linter placeholder')
+      const {data} = await axios.get('/api/cart')
+      dispatch(getCart(data))
     } catch (error) {
-      next(error)
+      console.error(error)
     }
   }
 }
 
+// export const addToCart = itemId => {
+//   return async (dispatch, next) => {
+//     try {
+//       console.log('linter placeholder')
+//     } catch (error) {
+//       next(error)
+//     }
+//   }
+// }
+
 /**
  * REDUCER
  */
-export const cartReducer = (state = cart, action) => {
+export default function(state = [], action) {
   switch (action.type) {
-    case ADD_TO_CART:
-      return [...state, action.item]
-    case REMOVE_ITEM:
-      return cart
+    case GET_CART:
+      return action.cart
+    // case ADD_TO_CART:
+    //   return [...state, action.item]
+    // case REMOVE_ITEM:
+    //   return state
     default:
       return state
   }

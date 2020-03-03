@@ -7,8 +7,7 @@ router.get('/', async (req, res, next) => {
     const items = await Cart.findAll({
       where: {
         userId: req.user.id
-      },
-      include: [{model: Slime}]
+      }
     })
     res.json(items)
   } catch (err) {

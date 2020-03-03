@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import connectedToAllSlimes from './components/AllSlimes'
 import connectedToSingleSlime from './components/SingleSlime'
+import Cart from './components/Cart'
 import {me} from './store'
 
 /**
@@ -25,6 +26,7 @@ class Routes extends Component {
         <Route path="/slimes/:id" component={connectedToSingleSlime} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/cart" component={Cart} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
