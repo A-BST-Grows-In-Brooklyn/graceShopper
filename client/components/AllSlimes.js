@@ -1,9 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSlimes} from '../store'
+import {Slime} from './Slime'
 
-class AllSimes extends React.Component {
+class AllSlimes extends React.Component {
   componentDidMount() {
+    console.log('INSIDE OF COMPONENT DID MOUNT')
     this.props.fetchSlimes()
   }
 
@@ -21,7 +23,7 @@ class AllSimes extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    slimes: state.slimes.slimes
+    slimes: state.slime.slimes
   }
 }
 
@@ -31,4 +33,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllSlimes)
+const connectedToAllSlimes = connect(mapStateToProps, mapDispatchToProps)(
+  AllSlimes
+)
+export default connectedToAllSlimes

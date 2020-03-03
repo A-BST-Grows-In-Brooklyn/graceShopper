@@ -22,6 +22,7 @@ const getSlime = slime => ({
 
 export const fetchSlimes = () => {
   return async dispatch => {
+    console.log('INSIDE OF FETCH SLIMES THUNK')
     try {
       const {data} = await axios.get('/api/slimes')
       dispatch(getSlimes(data))
@@ -31,7 +32,7 @@ export const fetchSlimes = () => {
   }
 }
 
-export const fetchSlime = id => {
+export const fetchSelectedSlime = id => {
   return async dispatch => {
     try {
       const {data} = await axios.get(`/api/slimes/${id}`)
@@ -44,14 +45,14 @@ export const fetchSlime = id => {
 
 //INITIAL STATE
 
-const intialState = {
+const initialState = {
   slimes: [],
   selectedSlime: {}
 }
 
 //REDUCER
 
-const reducer = (state = initialState, action) => {
+export default function(state = initialState, action) {
   switch (action.type) {
     case GET_SLIMES:
       return {...state, slimes: action.slimes}

@@ -15,9 +15,6 @@ const Slime = require('./slime')
  * instead of: const User = require('../db/models/user')
  */
 
-Slime.belongsToMany(User, {through: 'Cart'})
-User.belongsToMany(Slime, {through: 'Cart'})
-
 module.exports = {
   User,
   Slime
