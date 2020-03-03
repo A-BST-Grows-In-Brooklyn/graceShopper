@@ -19,6 +19,24 @@ router.post('/:userId', async (req, res, next) => {
   }
 })
 
+router.delete('/:id', async (req, res, next) => {
+  try {
+    if (req.user.admin) {
+      const slime = await Slime.findByPk(req.params.id)
+      if (slime) {
+        await slime.destroy()
+        res.sendStatus(204)
+      } else {
+        res.sendStatus(404)
+      }
+    } else {
+      res.status(401).send('Not An Admin!!')
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.get('/:id', async (req, res, next) => {
   try {
     const slime = await Slime.findByPk(req.params.id)
