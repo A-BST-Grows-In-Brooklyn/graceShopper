@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Cart, Slime, User} = require('../db/models')
+const {Cart, Slime} = require('../db/models')
 module.exports = router
 
 //mounted on /api/cart

@@ -1,11 +1,18 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {withRouter, Route, Switch} from 'react-router-dom'
+import {withRouter, Route, Switch, useRoutes} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, Home} from './components'
-import connectedToAllSlimes from './components/AllSlimes'
-import connectedToSingleSlime from './components/SingleSlime'
-import Cart from './components/Cart'
+import {
+  Login,
+  Signup,
+  UserHome,
+  Home,
+  Cart,
+  connectedToAllSlimes,
+  connectedToSingleSlime
+} from './components'
+// import connectedToAllSlimes from './components/AllSlimes'
+// import connectedToSingleSlime from './components/SingleSlime'
 import {me} from './store'
 
 /**
@@ -19,22 +26,32 @@ class Routes extends Component {
   render() {
     const {isLoggedIn} = this.props
 
+    // const routes = {
+    //   "/": () => <Home />,
+    //   "/slimes": () => <connectedToAllSlimes />,
+    //   "/slimes/:id": () => <connectedToSingleSlime />,
+    //   "/login": () => <Login />,
+    //   "/signup": () => <Signup />,
+    //   "/cart": () => <Cart />,
+    // };
+
+    // const routeResult = useRoutes(routes);
+
     return (
       <Switch>
-        {/* Routes placed here are available to all visitors */}
-        <Route exact path="/slimes" component={connectedToAllSlimes} />
+        <Route path="/slimes" component={connectedToAllSlimes} />
         <Route path="/slimes/:id" component={connectedToSingleSlime} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/cart" component={Cart} />
+        <Route exact path="/" component={Home} />
+        {/* Routes placed here are available to all visitors */}
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
           </Switch>
         )}
-        {/* Displays our Home component as a fallback */}
-        <Route path="/" component={Home} />
       </Switch>
     )
   }
