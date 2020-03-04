@@ -77,7 +77,7 @@ export default function(state = [], action) {
 
     case INCREMENT_ITEM: {
       let newIncrementItem = state.find(item => item.id === action.itemId)
-      newIncrementItem.quantity++
+      newIncrementItem.quantity = newIncrementItem.quantity + 1
       return [...state]
     }
 
