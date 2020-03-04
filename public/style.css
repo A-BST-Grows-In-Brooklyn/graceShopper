@@ -21,7 +21,12 @@ form div {
   display: inline-block;
 }
 
+#app {
+  width: 100%;
+}
+
 #mainBody {
+  width: 100%;
   margin-top: 5em;
 }
 
@@ -31,6 +36,26 @@ form div {
   justify-content: space-between;
 }
 
+#cart {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+#cartItem {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-content: center;
+}
+
+#cartTextContainer {
+  display: flex;
+}
+
+#cartText {
+  align-self: center;
+}
 #slimeIcon {
   width: 3rem;
   height: 3rem;
