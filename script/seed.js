@@ -67,8 +67,15 @@ const seed = async () => {
     )
 
     for (let i = 0; i < 20; i++) {
-      await createdUsers[i].addSlime(faker.random.arrayElement(createdSlimes))
+      // await createdUsers[i].addSlime(faker.random.arrayElement(createdSlimes))
+      let randomUser = faker.random.arrayElement(createdUsers)
+      let randomSlime = faker.random.arrayElement(createdSlimes)
+
+      await randomUser.addSlime(randomSlime)
     }
+
+    // if the cart table already contains a row that has createdUsers[i] and the randomly
+    // chosen createdSlimes from the array, up the quantity at that row
   } catch (error) {
     console.log(red(error))
   }
