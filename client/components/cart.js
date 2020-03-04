@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {viewCart} from '../store/cart'
+import {viewCart, removeFromCart} from '../store/cart'
 
 class Cart extends React.Component {
   componentDidMount() {
@@ -8,14 +8,29 @@ class Cart extends React.Component {
   }
 
   render() {
-    const slimes = this.props.cart
+    const items = this.props.cart
 
     return (
       <div id="cart">
-        {slimes.map(slime => (
-          <div id="slime" key={slime.slimeId}>
-            <img src="https://cdn141.picsart.com/259583308016202.png?to=crop&r=256&q=70" />
-            <div>Quantity in cart: {slime.quantity}</div>
+        {items.map(item => (
+          <div id="item" key={item.id}>
+            <div>
+              <b>{item.slime.name}</b>
+            </div>
+            <img
+              src={item.slime.imgUrl}
+              alt="Slime Photo"
+              width="200"
+              height="200"
+            />
+            <div>Quantity in cart: {item.quantity}</div>
+            <button
+              type="submit"
+              onClick={() => this.props.removeFromCart(item.id)}
+            >
+              Remove from Cart
+            </button>
+            <p />
           </div>
         ))}
       </div>
@@ -31,7 +46,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    viewCart: () => dispatch(viewCart())
+    viewCart: () => dispatch(viewCart()),
+    removeFromCart: itemId => dispatch(removeFromCart(itemId))
   }
 }
 

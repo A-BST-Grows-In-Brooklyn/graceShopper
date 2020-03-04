@@ -15,6 +15,12 @@ const Slime = require('./slime')
  * instead of: const User = require('../db/models/user')
  */
 
+Cart.belongsTo(User, {foreignKey: 'userId'})
+Cart.belongsTo(Slime, {foreignKey: 'slimeId'})
+
+User.belongsToMany(Slime, {through: Cart})
+Slime.belongsToMany(User, {through: Cart})
+
 module.exports = {
   User,
   Slime,

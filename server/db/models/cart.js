@@ -3,9 +3,6 @@ const db = require('../db')
 const User = require('./user')
 const Slime = require('./slime')
 
-// import User from './user'
-// import Slime from './slime'
-
 const Cart = db.define('cart', {
   id: {
     type: Sequelize.INTEGER,
