@@ -5,9 +5,9 @@
  */
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
-export {default as Footer} from './footer'
+export {default as Footer} from './Footer'
 export {default as Home} from './Home'
 export {Login, Signup} from './auth-form'
-export {AllSlimes} from './AllSlimes'
-export {SingleSlime} from './SingleSlime'
-export {Cart} from './Cart'
+export {default as connectedToAllSlimes} from './AllSlimes'
+export {default as connectedToSingleSlime} from './SingleSlime'
+export {default as Cart} from './Cart'
