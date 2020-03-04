@@ -7,7 +7,7 @@ function generateSlimes() {
   let slimes = []
   for (let i = 0; i < 100; i++) {
     slimes.push({
-      name: faker.commerce.productName(), // or faker.commerce.productName()
+      name: faker.commerce.productName(),
       color: faker.random.arrayElement([
         'red',
         'orange',
@@ -19,7 +19,6 @@ function generateSlimes() {
       texture: faker.random.arrayElement(['cloud', 'jelly', 'foam', 'butter']),
       price: faker.commerce.price(1.0, 100.0, 2),
       quantity: faker.random.number(100),
-      //imgURL: faker.random.image()
       imgURL: faker.random.arrayElement([
         'https://www.thesprucecrafts.com/thmb/7OZW2YwWnMAud9M1faNCk3oGhmk=/736x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Item1FluffySlime-5b2eef9aff1b780037e47490.jpg',
         'https://images-na.ssl-images-amazon.com/images/I/61LKtry2iOL._AC_SL1200_.jpg',
@@ -42,7 +41,7 @@ function generateUsers() {
   for (let i = 0; i < 100; i++) {
     users.push({
       email: faker.internet.email(),
-      password: faker.internet.password(),
+      password: 'password',
       admin: faker.random.boolean(10)
     })
   }
@@ -51,41 +50,25 @@ function generateUsers() {
 
 let usersArray = generateUsers()
 
-function generateCarts() {
-  let carts = []
-  for (let i = 0; i < 100; i++) {
-    carts.push({
-      userId: faker.random.number(100),
-      slimeId: faker.random.number(100),
-      quantity: faker.random.number(5)
-    })
-  }
-  return carts
-}
-
-let cartsArray = generateCarts()
-
 const seed = async () => {
   try {
     await db.sync({force: true})
 
-    await Promise.all(
+    let createdSlimes = await Promise.all(
       slimesArray.map(slime => {
         return Slime.create(slime)
       })
     )
 
-    await Promise.all(
+    let createdUsers = await Promise.all(
       usersArray.map(user => {
         return User.create(user)
       })
     )
 
-    await Promise.all(
-      cartsArray.map(cart => {
-        return Cart.create(cart)
-      })
-    )
+    for (let i = 0; i < 20; i++) {
+      await createdUsers[i].addSlime(faker.random.arrayElement(createdSlimes))
+    }
   } catch (error) {
     console.log(red(error))
   }
