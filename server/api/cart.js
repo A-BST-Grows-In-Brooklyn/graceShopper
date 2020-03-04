@@ -19,6 +19,35 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+//update quantity from cart
+router.put('/increment', async (req, res, next) => {
+  try {
+    const currentUser = req.user.id
+    const itemId = req.body.itemId
+
+    let instanceToUpdate = await Cart.findOne({
+      where: {
+        userId: 4,
+        slimeId: 4
+      }
+    })
+    if (instanceToUpdate) {
+      await instanceToUpdate.update({
+        quantity: instanceToUpdate.quantity + 1
+      })
+      instanceToUpdate = instanceToUpdate.reload()
+    }
+    if (instanceToUpdate) {
+      res.json(instanceToUpdate)
+    } else {
+      res.sendStatus(404)
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+//add item to cart from SingleSlime
 router.post('/', async (req, res, next) => {
   try {
     const currentUser = req.user.id
@@ -32,9 +61,10 @@ router.post('/', async (req, res, next) => {
     })
     let item = {}
     if (itemToUpdate) {
-      item = await itemToUpdate.update({
+      await itemToUpdate.update({
         quantity: itemToUpdate.quantity + quantity
       })
+      item = itemToUpdate.reload()
     } else {
       item = await Cart.create({
         userId: currentUser,

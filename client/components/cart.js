@@ -1,6 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {viewCart, removeFromCart} from '../store/cart'
+import {viewCart, removeFromCart, incrementCartItem} from '../store/cart'
+import {Grid, Button, IconButton} from '@material-ui/core'
+import RemoveCircleOutlinedIcon from '@material-ui/icons/RemoveCircleOutlined'
+import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined'
 
 class Cart extends React.Component {
   componentDidMount() {
@@ -11,11 +14,18 @@ class Cart extends React.Component {
     const items = this.props.cart
 
     return (
-      <div id="cart">
+      <Grid
+        container
+        direction="column"
+        justify="space-evenly"
+        alignItems="stretch"
+      >
+        <h1 id="cartHeader">My Cart</h1>
+
         {items.map(item => (
-          <div id="item" key={item.id}>
-            <div>
-              <b>{item.slime.name}</b>
+          <div id="cartItem" key={item.id}>
+            <div id="cartTextContainer">
+              <b id="cartText">{item.slime.name}</b>
             </div>
             <img
               src={item.slime.imgURL}
@@ -23,17 +33,31 @@ class Cart extends React.Component {
               width="200"
               height="200"
             />
-            <div>Quantity in cart: {item.quantity}</div>
-            <button
-              type="submit"
-              onClick={() => this.props.removeFromCart(item.id)}
-            >
-              Remove from Cart
-            </button>
-            <p />
+            <div id="cartTextContainer">
+              <IconButton color="primary">
+                <RemoveCircleOutlinedIcon fontSize="large" />
+              </IconButton>
+
+              <b id="cartText"> Quantity: {item.quantity}</b>
+              <IconButton
+                color="primary"
+                onClick={() => this.props.incrementCartItem(item.id)}
+              >
+                <AddCircleOutlinedIcon fontSize="large" />
+              </IconButton>
+            </div>
+            <div id="cartTextContainer">
+              <Button
+                id="cartText"
+                color="primary"
+                onClick={() => this.props.removeFromCart(item.id)}
+              >
+                Remove from Cart
+              </Button>
+            </div>
           </div>
         ))}
-      </div>
+      </Grid>
     )
   }
 }
@@ -47,7 +71,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     viewCart: () => dispatch(viewCart()),
-    removeFromCart: itemId => dispatch(removeFromCart(itemId))
+    removeFromCart: itemId => dispatch(removeFromCart(itemId)),
+    incrementCartItem: itemId => dispatch(incrementCartItem(itemId))
   }
 }
 
