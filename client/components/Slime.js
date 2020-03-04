@@ -7,7 +7,7 @@ export const Slime = props => {
   return (
     <div key={slime.id}>
       <Link to={`/slimes/${slime.id}`}>
-        <img src={slime.imgUrl} alt="Slime Photo" width="200" height="200" />
+        <img src={slime.imgURL} alt="Slime Photo" width="200" height="200" />
         {slime.name}
         {slime.price}
       </Link>
