@@ -24,15 +24,27 @@ router.post('/', async (req, res, next) => {
     const currentUser = req.user.id
     const itemId = req.body.itemId
     const quantity = req.body.quantity
-
-    const itemToAdd = await Cart.create({
-      userId: currentUser,
-      slimeId: itemId,
-      quantity: quantity
+    const itemToUpdate = await Cart.findOne({
+      where: {
+        userId: currentUser,
+        slimeId: itemId
+      }
     })
+    let item = {}
+    if (itemToUpdate) {
+      item = await itemToUpdate.update({
+        quantity: itemToUpdate.quantity + quantity
+      })
+    } else {
+      item = await Cart.create({
+        userId: currentUser,
+        slimeId: itemId,
+        quantity: quantity
+      })
+    }
 
-    if (itemToAdd) {
-      res.json(itemToAdd)
+    if (item) {
+      res.json(item)
     } else {
       res.sendStatus(404)
     }

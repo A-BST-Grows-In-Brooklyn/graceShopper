@@ -18,7 +18,7 @@ class Cart extends React.Component {
               <b>{item.slime.name}</b>
             </div>
             <img
-              src={item.slime.imgUrl}
+              src={item.slime.imgURL}
               alt="Slime Photo"
               width="200"
               height="200"
