@@ -39,7 +39,7 @@ class Routes extends Component {
 
     return (
       <Switch>
-        <Route path="/slimes" component={connectedToAllSlimes} />
+        <Route exact path="/slimes" component={connectedToAllSlimes} />
         <Route path="/slimes/:id" component={connectedToSingleSlime} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />

@@ -45,7 +45,6 @@ export const incrementCartItem = itemId => {
     try {
       const {data} = await axios.put(`/api/cart/increment`, itemToAdd)
       dispatch(incrementItem(data))
-      dispatch(viewCart())
     } catch (error) {
       next(error)
     }
@@ -76,8 +75,6 @@ export default function(state = [], action) {
       return state
 
     case INCREMENT_ITEM: {
-      let newIncrementItem = state.find(item => item.id === action.itemId)
-      newIncrementItem.quantity = newIncrementItem.quantity + 1
       return [...state]
     }
 

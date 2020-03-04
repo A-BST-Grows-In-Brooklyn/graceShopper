@@ -34,8 +34,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             {/* The navbar will show these links after you log in */}
             <IconButton component={Link} to="/home">
               <HomeRoundedIcon />
-            </IconButton>{' '}
-            */}
+            </IconButton>
             <Button onClick={handleClick}>Logout</Button>
           </div>
         ) : (
