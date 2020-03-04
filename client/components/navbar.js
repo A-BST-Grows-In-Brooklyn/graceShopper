@@ -32,7 +32,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         {isLoggedIn ? (
           <div id="login">
             {/* The navbar will show these links after you log in */}
-            <IconButton component={Link} to="/">
+            <IconButton component={Link} to="/home">
               <HomeRoundedIcon />
             </IconButton>
             <Button onClick={handleClick}>Logout</Button>
@@ -49,7 +49,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             </Button>
           </div>
         )}
-        <IconButton component={Link} to="/">
+        <IconButton component={Link} to="/cart">
           <ShoppingBasketTwoToneIcon fontSize="large" />
         </IconButton>
       </div>

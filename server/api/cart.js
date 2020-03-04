@@ -2,6 +2,9 @@ const router = require('express').Router()
 const {Cart, Slime, User} = require('../db/models')
 module.exports = router
 
+//mounted on /api/cart
+
+//generate cart//
 router.get('/', async (req, res, next) => {
   try {
     const items = await Cart.findAll({
@@ -11,6 +14,28 @@ router.get('/', async (req, res, next) => {
       include: [{model: Slime}]
     })
     res.json(items)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.post('/', async (req, res, next) => {
+  try {
+    const currentUser = req.user.id
+    const itemId = req.body.itemId
+    const quantity = req.body.quantity
+
+    const itemToAdd = await Cart.create({
+      userId: currentUser,
+      slimeId: itemId,
+      quantity: quantity
+    })
+
+    if (itemToAdd) {
+      res.json(itemToAdd)
+    } else {
+      res.sendStatus(404)
+    }
   } catch (error) {
     next(error)
   }

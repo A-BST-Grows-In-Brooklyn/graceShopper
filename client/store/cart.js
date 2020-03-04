@@ -1,14 +1,14 @@
 import axios from 'axios'
 
 const GET_CART = 'GET_CART'
-// const ADD_TO_CART = 'ADD_TO_CART'
+const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_ITEM = 'REMOVE_ITEM'
 // const SUB_QUANTITY = 'SUB_QUANTITY'
 // const ADD_QUANTITY = 'ADD_QUANTITY'
 
 export const getCart = cart => ({type: GET_CART, cart})
 
-// export const addItem = itemId => ({type: ADD_TO_CART, itemId})
+export const addItem = item => ({type: ADD_TO_CART, item})
 
 export const removeItem = itemId => ({type: REMOVE_ITEM, itemId})
 
@@ -23,15 +23,17 @@ export const viewCart = () => {
   }
 }
 
-// export const addToCart = slimeId => {
-//   return async (dispatch, next) => {
-//     try {
-//
-//     } catch (error) {
-//       next(error)
-//     }
-//   }
-// }
+export const addToCart = (itemId, quantity) => {
+  return async (dispatch, next) => {
+    const itemToAdd = {itemId: itemId, quantity: quantity}
+    try {
+      const {data} = await axios.post(`/api/cart/`, itemToAdd)
+      dispatch(addItem(data))
+    } catch (error) {
+      next(error)
+    }
+  }
+}
 
 export const removeFromCart = itemId => {
   return async (dispatch, next) => {
@@ -53,8 +55,8 @@ export default function(state = [], action) {
     case GET_CART:
       return action.cart
 
-    // case ADD_TO_CART:
-    //   return [...state, action.]
+    case ADD_TO_CART:
+      return state
 
     case REMOVE_ITEM: {
       const newCart = state.filter(item => item.id !== action.itemId)
