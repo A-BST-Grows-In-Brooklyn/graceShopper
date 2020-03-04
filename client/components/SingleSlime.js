@@ -1,7 +1,9 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {fetchSelectedSlime} from '../store'
 
+import {connect} from 'react-redux'
+import {fetchSelectedSlime, addToCart} from '../store'
+
+import {Button} from '@material-ui/core'
 class SingleSlime extends React.Component {
   componentDidMount() {
     this.props.fetchSelectedSlime(this.props.match.params.id)
@@ -12,13 +14,18 @@ class SingleSlime extends React.Component {
 
     return (
       <div>
-        <h1>HELLO</h1>
+        <h1>{slime.name}</h1>
         <img src={slime.imgURL} alt="Slime Photo" width="200" height="200" />
-        {slime.name}
-        {slime.price}
-        {slime.color}
-        {slime.texture}
-        <button>Add to Cart</button>
+        <h4>${slime.price}</h4>
+        <h4>color : {slime.color}</h4>
+        <h4>texture : {slime.texture}</h4>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => this.props.addToCart(slime.id, 1)}
+        >
+          Add to Cart
+        </Button>
       </div>
     )
   }
@@ -32,7 +39,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchSelectedSlime: id => dispatch(fetchSelectedSlime(id))
+    fetchSelectedSlime: id => dispatch(fetchSelectedSlime(id)),
+    addToCart: (itemId, quantity) => dispatch(addToCart(itemId, quantity))
   }
 }
 
