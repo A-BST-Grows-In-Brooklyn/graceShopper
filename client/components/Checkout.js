@@ -2,8 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import {viewCart} from '../store/cart'
-// import {fetchSlimes} from '../store'
-// import {Slime} from './Slime'
 
 class Checkout extends React.Component {
   constructor() {
