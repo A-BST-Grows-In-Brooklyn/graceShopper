@@ -22,7 +22,6 @@ const getSlime = slime => ({
 
 export const fetchSlimes = () => {
   return async dispatch => {
-    console.log('INSIDE OF FETCH SLIMES THUNK')
     try {
       const {data} = await axios.get('/api/slimes')
       dispatch(getSlimes(data))

@@ -2,10 +2,43 @@ const router = require('express').Router()
 const {Slime, User} = require('../db/models')
 module.exports = router
 
-router.post('/:userId', async (req, res, next) => {
+router.put('/:slimeId', async (req, res, next) => {
   try {
     if (req.user.admin) {
-      const newSlime = await Slime.create(req.body)
+      const id = req.params.slimeId
+      const {name, color, texture, price, quantity, imgURL} = req.body
+      const slimeToUpdate = await Slime.findByPk(id)
+      if (slimeToUpdate) {
+        await slimeToUpdate.update({
+          name,
+          color,
+          texture,
+          price,
+          quantity,
+          imgURL
+        })
+        res.send(slimeToUpdate)
+      }
+    } else {
+      res.status(404).send('Not An Admin')
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.post('/', async (req, res, next) => {
+  try {
+    if (req.user.admin) {
+      const {name, color, texture, price, quantity, imgURL} = req.body
+      const newSlime = await Slime.create({
+        name,
+        color,
+        texture,
+        price,
+        quantity,
+        imgURL
+      })
       if (newSlime) {
         res.status(201).json(newSlime)
       } else {
