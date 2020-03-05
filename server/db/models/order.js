@@ -32,6 +32,7 @@ const Order = db.define('order', {
   }
 })
 
+//create new Order instance
 Order.createOrderInstance = async (slimeId, quantity, userId) => {
   try {
     const newOrder = await Order.create({userId})
@@ -48,10 +49,37 @@ Order.createOrderInstance = async (slimeId, quantity, userId) => {
   }
 }
 
+//adds line item instance to existing carts
+
+Order.updateOrderNewItem = async (order, slimeId, quantity) => {
+  try {
+    const lineItem = await LineItem.create({
+      slimeId: slimeId,
+      quantity: quantity
+    })
+    await order.addLineItem(lineItem)
+    order.totalPrice += lineItem.totalPrice
+    await order.save({fields: ['totalPrice']})
+    return order
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 Order.addItem = async (slimeId, quantity, userId) => {
   try {
-    let order
-    order = await Order.createOrderInstance(slimeId, quantity, userId)
+    let order = await Order.findOne({
+      where: {
+        userId: userId,
+        completed: false
+      }
+    })
+    if (!order) {
+      order = await Order.createOrderInstance(slimeId, quantity, userId)
+    } else {
+      order = await Order.updateOrderNewItem(order, slimeId, quantity)
+    }
+
     return order
   } catch (err) {
     console.log(err)
