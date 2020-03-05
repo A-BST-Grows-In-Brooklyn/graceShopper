@@ -1,6 +1,9 @@
 const User = require('./user')
 const Cart = require('./cart')
 const Slime = require('./slime')
+const Order = require('./order')
+const LineItem = require('./lineItem')
+
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:
@@ -18,11 +21,17 @@ const Slime = require('./slime')
 Cart.belongsTo(User, {foreignKey: 'userId'})
 Cart.belongsTo(Slime, {foreignKey: 'slimeId'})
 
+LineItem.belongsTo(Order, {foreignKey: 'orderId'})
+Order.hasMany(LineItem)
+Order.belongsTo(User)
+
 User.belongsToMany(Slime, {through: Cart})
 Slime.belongsToMany(User, {through: Cart})
 
 module.exports = {
   User,
   Slime,
-  Cart
+  Cart,
+  LineItem,
+  Order
 }
