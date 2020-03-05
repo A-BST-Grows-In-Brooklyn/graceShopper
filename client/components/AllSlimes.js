@@ -5,7 +5,6 @@ import {Slime} from './Slime'
 
 class AllSlimes extends React.Component {
   componentDidMount() {
-    console.log('INSIDE OF COMPONENT DID MOUNT')
     this.props.fetchSlimes()
   }
 
