@@ -22,7 +22,6 @@ class Cart extends React.Component {
         alignItems="stretch"
       >
         <h1 id="cartHeader">My Cart</h1>
-
         {items.map(item => (
           <div id="cartItem" key={item.id}>
             <div id="cartTextContainer">
@@ -48,6 +47,9 @@ class Cart extends React.Component {
               </IconButton>
             </div>
             <div id="cartTextContainer">
+              <b id="cartText">$ $$.$$</b>
+            </div>
+            <div id="cartTextContainer">
               <Button
                 id="cartText"
                 color="primary"
@@ -58,9 +60,21 @@ class Cart extends React.Component {
             </div>
           </div>
         ))}
-        <button onSubmit>Place Your Order</button>
-        {/* <Redirect to="/checkout">HELLO</Redirect> */}
-        {/* Above: Insert button that onClick takes you to checkout page. */}
+        <div id="cartItem">
+          <div id="cartFooter">
+            <div id="cartTextContainer">
+              <b id="cartText">Total Num of Slimes</b>
+            </div>
+            <div id="cartTextContainer">
+              <b id="cartText">Total cost</b>
+            </div>
+            <div id="cartTextContainer">
+              <Button id="cartText" variant="contained" color="primary">
+                Checkout
+              </Button>
+            </div>
+          </div>
+        </div>
       </Grid>
     )
   }
