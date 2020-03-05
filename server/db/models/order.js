@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 const User = require('./user')
-const LineItems = require('./line-item')
+
+const LineItem = require('./lineItem')
 
 const Order = db.define('order', {
   id: {
@@ -17,26 +18,47 @@ const Order = db.define('order', {
     },
     allowNull: false
   },
-  orderItems: {
-    type: Sequelize.ARRAY,
-    references: {
-      model: LineItems,
-      key: 'id'
-    },
-    allowNull: false
-  },
   totalPrice: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    default: 0
   },
   completed: {
     type: Sequelize.BOOLEAN,
-    allowNull: false
+    defaultValue: false
   },
   address: {
     type: Sequelize.STRING,
-    defaultValue: 1
+    defaultValue: 'No address given'
   }
 })
 
+Order.createOrderInstance = async (slimeId, quantity, userId) => {
+  try {
+    const newOrder = await Order.create({userId})
+    const lineItem = await LineItem.create({
+      slimeId: slimeId,
+      quantity: quantity
+    })
+    await newOrder.addLineItem(lineItem)
+    newOrder.totalPrice = lineItem.totalPrice
+    await newOrder.save({fields: ['totalPrice']})
+    return newOrder
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+Order.addItem = async (slimeId, quantity, userId) => {
+  try {
+    let order
+    order = await Order.createOrderInstance(slimeId, quantity, userId)
+    return order
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+// Order.prototype.updatePrice = async (orderPrice, instancePrice, oldInstancePrice = 0) {
+
+// }
 module.exports = Order
