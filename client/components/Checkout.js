@@ -62,7 +62,7 @@ class Checkout extends React.Component {
 
         <h2>3. Review Items</h2>
         <div>
-          {/* Insert single view items - no option to edit. */}
+          {/* Insert single view items w/ qty - no option to edit. */}
           {/* Create single view item component to make this easier. */}
         </div>
 
@@ -75,8 +75,6 @@ class Checkout extends React.Component {
         {/* If not a user we can add a field to add a password and create user. */}
 
         <button type="submit">Place Your Order</button>
-
-        {/* would be cool if we could do shipping address / billing address, checkbox if they're the same and pre-populate the info // also other ways to pay - paypal, credit card, etc.*/}
       </form>
     )
   }
