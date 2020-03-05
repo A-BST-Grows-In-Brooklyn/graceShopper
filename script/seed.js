@@ -39,9 +39,16 @@ let slimesArray = generateSlimes()
 function generateUsers() {
   let users = []
   for (let i = 0; i < 100; i++) {
+    let address = []
+    address.push(faker.address.streetAddress())
+    address.push(faker.address.city())
+    address.push(faker.address.stateAbbr())
+    address.push('USA')
     users.push({
+      name: faker.name.findName(),
       email: faker.internet.email(),
       password: 'password',
+      address: address,
       admin: faker.random.boolean(10)
     })
   }

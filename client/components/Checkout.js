@@ -2,16 +2,36 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import {viewCart} from '../store/cart'
+import {me} from '../store'
+import UserForm from './userform'
 
 class Checkout extends React.Component {
   constructor() {
     super()
     this.state = {
+      name: '',
+      email: '',
       submitted: false
     }
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
-  componentDidMount() {}
+
+  async componentDidMount() {
+    await this.props.me()
+    let user = this.props.user
+    console.log('INSIDE OF CHECKOUT COMPONENT!', user)
+    this.setState({
+      name: user.name,
+      email: user.email
+    })
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
 
   handleSubmit(event) {
     event.preventDefault()
@@ -27,32 +47,13 @@ class Checkout extends React.Component {
       return <Redirect to="/confirmation/:orderId" />
     }
 
-    const items = this.props.cart
-
     return (
       <form id="checkout-form" onSubmit={this.handleSubmit}>
         <h1>Order Summary</h1>
 
         <h2>1. Shipping Address</h2>
         <div>
-          <label htmlFor="userName">Name</label>
-          <input
-            name="userName"
-            type="text"
-            value={this.state.name}
-            onChange={this.handleChange}
-            placeholder="Field Required" // can make place holder the value if we can pull in logged in user info
-          />
-
-          <label htmlFor="email">Email</label>
-          <input
-            name="email"
-            type="text"
-            value={this.state.email}
-            onChange={this.handleChange}
-            placeholder="Field Required" // can make place holder the value if we can pull in logged in user info
-          />
-          {/* Form data, option to pre-populate if logged in user is saved. */}
+          <UserForm />
         </div>
 
         <h2>2. Payment Method</h2>
@@ -82,13 +83,12 @@ class Checkout extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  cart: state.cart
+  user: state.user
 })
 
 const mapDispatchToProps = dispatch => ({
-  viewCart: () => dispatch(viewCart())
-  // fetchUser
-  // fetch total order and total order price
+  // viewCart: () => dispatch(viewCart()),
+  me: () => dispatch(me())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)

@@ -13,6 +13,7 @@ import {
 } from './components'
 import Confirmation from './components/confirmation'
 import Checkout from './components/checkout'
+import Userform from './components/userform'
 import {me} from './store'
 
 /**
@@ -41,6 +42,7 @@ class Routes extends Component {
         <Route path="/cart" component={Cart} />
         <Route path="/confirmation" component={Confirmation} />
         <Route path="/checkout" component={Checkout} />
+        <Route path="/userform" component={Userform} />
         <Route exact path="/" component={Home} />
         {loggedInUserAccess}
       </Switch>
