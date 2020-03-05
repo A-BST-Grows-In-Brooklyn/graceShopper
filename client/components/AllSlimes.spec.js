@@ -9,6 +9,7 @@ import {Provider} from 'react-redux'
 import * as rrd from 'react-router-dom'
 import 'jsdom-global/register'
 const {MemoryRouter} = rrd
+import Home from './Home'
 
 const adapter = new Adapter()
 enzyme.configure({adapter})
@@ -19,17 +20,40 @@ const initialState = {
   slimes: []
 }
 
-// describe('UserHome', () => {
-//   let userHome
+describe('App component testing', function() {
+  it('renders welcome message', function() {
+    const wrapper = shallow(<Home />)
+    const welcome = <h1>Welcome to Slime Generation!!!</h1>
+    expect(wrapper.contains(welcome)).to.equal(true)
+  })
+})
 
+// describe('Single Slime component testing', function() {
+//   let fakeStore
+//   const slime = [
+//     {id: 1, name: 'Slimey', color: 'blue', texture: 'cloud'}
+//   ]
 //   beforeEach(() => {
-//     userHome = shallow(<UserHome email="cody@email.com" />)
+//     fakeStore = mockStore(initialState)
 //   })
 
-//   it('renders the email in an h3', () => {
-//     expect(userHome.find('h3').text()).to.be.equal('Welcome, cody@email.com')
+//   describe('<connectedToSingleSlime /> component', () => {
+//     it('renders the slime passed in as props', () => {
+//       const wrapper = mount(
+//         <Provider store={fakeStore}>
+//           <MemoryRouter>
+//             <connectedToSingleSlime
+//               slime={[
+//                 {id: 1, name: 'Slimey', color: 'blue', texture: 'cloud'}
+//               ]}
+//             />
+//           </MemoryRouter>
+//         </Provider>
+//       )
+//       expect(wrapper.text()).to.include('Slimey')
+//       expect(wrapper.text()).to.include('SlimeyII')
+//     })
 //   })
-// })
 
 describe('AllSlimes', () => {
   let fakeStore
