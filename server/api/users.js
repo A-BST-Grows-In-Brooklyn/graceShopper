@@ -19,3 +19,18 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/:id', async (req, res, next) => {
+  try {
+    if (req.user && req.user.admin) {
+      const myUser = await User.findByPk(req.params.id)
+      if (myUser) {
+        res.json(myUser)
+      }
+    } else {
+      res.status(401).send('Not An Admin')
+    }
+  } catch (err) {
+    next(err)
+  }
+})
