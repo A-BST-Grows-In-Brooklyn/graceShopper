@@ -28,13 +28,16 @@ describe('Slime routes', () => {
     })
   })
 
-  // it('GET /api/slimes/:id', async () => {
-  //   const res = await request(app)
-  //     // const slime = db.model('slimes').first()
-  //     .get('/api/slimes/' + Slime.id)
-  //     .expect(200)
-
-  //   expect(res.body).to.be.an('object')
-  //   expect(res.body.name).to.be.equal('Slimey')
-  // })
+  it('GET /api/slimes/:id', async () => {
+    Slime.create({
+      name: 'Slimey',
+      color: 'blue',
+      texture: 'cloud'
+    })
+    const res = await request(app)
+      .get('/api/slimes/1')
+      .expect(200)
+    expect(res.body).to.be.an('object')
+    expect(res.body.name).to.be.equal('Slimey')
+  })
 })

@@ -20,6 +20,13 @@ describe('User routes', () => {
       })
     })
 
+    xit('Login', async () => {
+      await request(app)
+        .post('/auth/login')
+        .send({email: 'Billy.Kuhlman@gmail.com', password: 'password'})
+        .expect(200)
+    })
+
     it('GET /api/users', async () => {
       const res = await request(app)
         .get('/api/users')

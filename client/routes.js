@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {withRouter, Route, Switch, useRoutes} from 'react-router-dom'
+import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {
   Login,
@@ -11,8 +11,6 @@ import {
   connectedToAllSlimes,
   connectedToSingleSlime
 } from './components'
-// import connectedToAllSlimes from './components/AllSlimes'
-// import connectedToSingleSlime from './components/SingleSlime'
 import {me} from './store'
 
 /**
@@ -26,16 +24,11 @@ class Routes extends Component {
   render() {
     const {isLoggedIn} = this.props
 
-    // const routes = {
-    //   "/": () => <Home />,
-    //   "/slimes": () => <connectedToAllSlimes />,
-    //   "/slimes/:id": () => <connectedToSingleSlime />,
-    //   "/login": () => <Login />,
-    //   "/signup": () => <Signup />,
-    //   "/cart": () => <Cart />,
-    // };
-
-    // const routeResult = useRoutes(routes);
+    let loggedInUserAccess = isLoggedIn ? (
+      <Route path="/home" component={UserHome} />
+    ) : (
+      <Redirect to="/login" />
+    )
 
     return (
       <Switch>
@@ -45,13 +38,7 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route path="/cart" component={Cart} />
         <Route exact path="/" component={Home} />
-        {/* Routes placed here are available to all visitors */}
-        {isLoggedIn && (
-          <Switch>
-            {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
-          </Switch>
-        )}
+        {loggedInUserAccess}
       </Switch>
     )
   }
