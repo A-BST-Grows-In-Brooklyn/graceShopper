@@ -1,5 +1,4 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
 
 export const Confirmation = props => {
   const order = props.order
@@ -12,3 +11,6 @@ export const Confirmation = props => {
     </div>
   )
 }
+
+// we don't need to pass through order as props but I thought it might look nice
+// to give a confirmation number

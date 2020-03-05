@@ -17,6 +17,8 @@ class Checkout extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
+    // take data from checkout and store it in order history
+    // take data from order_products through table and change status to complete
     this.setState({
       submitted: true
     })
@@ -31,27 +33,51 @@ class Checkout extends React.Component {
 
     return (
       <form id="checkout-form" onSubmit={this.handleSubmit}>
-        <label htmlFor="userName">Name</label>
-        <input
-          name="userName"
-          type="text"
-          value={this.state.name}
-          onChange={this.handleChange}
-          placeholder="Field Required" // can make place holder the value if we can pull in logged in user info
-        />
+        <h1>Order Summary</h1>
 
-        <label htmlFor="email">Email</label>
-        <input
-          name="email"
-          type="text"
-          value={this.state.email}
-          onChange={this.handleChange}
-          placeholder="Field Required" // can make place holder the value if we can pull in logged in user info
-        />
+        <h2>1. Shipping Address</h2>
+        <div>
+          <label htmlFor="userName">Name</label>
+          <input
+            name="userName"
+            type="text"
+            value={this.state.name}
+            onChange={this.handleChange}
+            placeholder="Field Required" // can make place holder the value if we can pull in logged in user info
+          />
+
+          <label htmlFor="email">Email</label>
+          <input
+            name="email"
+            type="text"
+            value={this.state.email}
+            onChange={this.handleChange}
+            placeholder="Field Required" // can make place holder the value if we can pull in logged in user info
+          />
+          {/* Form data, option to pre-populate if logged in user is saved. */}
+        </div>
+
+        <h2>2. Payment Method</h2>
+
+        {/* No need to add this right now */}
+
+        <h2>3. Review Items</h2>
+        <div>
+          {/* Insert single view items - no option to edit. */}
+          {/* Create single view item component to make this easier. */}
+        </div>
+
+        <h2>4. Order Total</h2>
+        <p>Subtotal:</p>
+        <p>Shipping:</p>
+        <p>Tax:</p>
+        <p>Order Total:</p>
+
+        {/* If not a user we can add a field to add a password and create user. */}
+
+        <button type="submit">Place Your Order</button>
 
         {/* would be cool if we could do shipping address / billing address, checkbox if they're the same and pre-populate the info // also other ways to pay - paypal, credit card, etc.*/}
-
-        <button type="submit">Place Order</button>
       </form>
     )
   }
