@@ -49,6 +49,13 @@ form div {
   align-content: center;
 }
 
+#cartFooter {
+  width: 60%;
+  margin-left: 40%;
+  display: flex;
+  justify-content: inherit;
+}
+
 #cartTextContainer {
   display: flex;
 }

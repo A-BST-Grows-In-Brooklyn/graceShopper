@@ -25,7 +25,7 @@ const Slime = db.define('slime', {
   imgURL: {
     type: Sequelize.TEXT,
     defaultValue:
-      'https://www.savynaturalista.com/wp-content/uploads/Green-SLime-No-glue_.jpg'
+      'https://cdn.shopify.com/s/files/1/0023/9514/4236/products/Facetune_26-02-2020-21-42-25_grande.jpg?v=1582978921'
   }
 })
 
