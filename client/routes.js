@@ -26,23 +26,17 @@ class Routes extends Component {
   render() {
     const {isLoggedIn} = this.props
 
-    let loggedInUserAccess = isLoggedIn ? (
-      <Route path="/home" component={UserHome} />
-    ) : (
-      <Redirect to="/login" />
-    )
-
     return (
       <Switch>
         <Route exact path="/slimes" component={connectedToAllSlimes} />
         <Route path="/slimes/:id" component={connectedToSingleSlime} />
+        <Route path="/home" component={UserHome} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/cart" component={Cart} />
         <Route path="/confirmation" component={Confirmation} />
         <Route path="/checkout" component={Checkout} />
         <Route exact path="/" component={Home} />
-        {loggedInUserAccess}
       </Switch>
     )
   }

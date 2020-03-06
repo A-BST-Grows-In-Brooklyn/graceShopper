@@ -29,6 +29,9 @@ const LineItem = db.define('lineItem', {
 
 LineItem.beforeSave(async function(lineItemInstance) {
   try {
+    if (lineItemInstance.quantity <= 0) {
+      await lineItemInstance.destroy()
+    }
     let id = lineItemInstance.slimeId
     let slime = await Slime.findByPk(id)
     lineItemInstance.totalPrice = slime.price * lineItemInstance.quantity
