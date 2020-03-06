@@ -6,6 +6,10 @@ import UserForm from './userform'
 export const UserHome = props => {
   const {user} = props
 
+  if (!email) {
+    return <Redirect to="/login" />
+  }
+
   return (
     <div>
       <h1>Hello, {user.name}!</h1>
@@ -25,9 +29,9 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps)(UserHome)
 
-// /**
-//  * PROP TYPES
-//  */
-// UserHome.propTypes = {
-//   email: PropTypes.string
-// }
+/**
+ * PROP TYPES
+ */
+UserHome.propTypes = {
+  email: PropTypes.string
+}
