@@ -7,9 +7,9 @@ import UserForm from './userform'
 export const UserHome = props => {
   const {user} = props
 
-  if (!email) {
-    return <Redirect to="/login" />
-  }
+  // if (!email) {
+  //   return <Redirect to="/login" />
+  // }
 
   return (
     <div>
