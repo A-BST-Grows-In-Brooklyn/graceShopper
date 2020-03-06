@@ -13,3 +13,5 @@ const Confirmation = props => {
 }
 
 export default Confirmation
+
+// mapStateToProps to bring in info on most recent order

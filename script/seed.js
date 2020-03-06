@@ -57,6 +57,27 @@ function generateUsers() {
 
 let usersArray = generateUsers()
 
+function generateLineItems() {
+  let lineItems = []
+  for (let i = 0; i < 100; i++) {
+    lineItems.push({
+      slimeId: faker.random.number(100),
+      quantity: faker.random.number(10)
+    })
+  }
+}
+
+let lineItemsArray = generateLineItems()
+
+// MAY NOT NEED THIS ^^^: if you create associations between slimes and orders it should generate lineitems automatically?
+
+function generateOrder() {
+  let orders = []
+  for (let i = 0; i < 100; i++) {
+    orders.push({})
+  }
+}
+
 const seed = async () => {
   try {
     await db.sync({force: true})

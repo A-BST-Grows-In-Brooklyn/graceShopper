@@ -20,7 +20,14 @@ class Checkout extends React.Component {
   async componentDidMount() {
     await this.props.me()
     let user = this.props.user
-    console.log('INSIDE OF CHECKOUT COMPONENT!', user)
+
+    console.log('INSIDE OF CHECKOUT COMPONENT!', 'USER:', user)
+
+    await this.props.viewCart()
+    let cart = this.props.cart
+
+    console.log('INSIDE OF CHECKOUT COMPONENT!', 'CART:', cart)
+
     this.setState({
       name: user.name,
       email: user.email
@@ -81,11 +88,12 @@ class Checkout extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user,
+  cart: state.cart
 })
 
 const mapDispatchToProps = dispatch => ({
-  // viewCart: () => dispatch(viewCart()),
+  viewCart: () => dispatch(viewCart()),
   me: () => dispatch(me())
 })
 
