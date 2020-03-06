@@ -9,14 +9,6 @@ const LineItem = db.define('lineItem', {
     primaryKey: true,
     autoIncrement: true
   },
-  slimeId: {
-    type: Sequelize.INTEGER,
-    references: {
-      model: Slime,
-      key: 'id'
-    },
-    allowNull: false
-  },
   quantity: {
     type: Sequelize.INTEGER,
     defaultValue: 1

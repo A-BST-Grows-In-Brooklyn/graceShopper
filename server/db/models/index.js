@@ -21,6 +21,7 @@ const LineItem = require('./lineItem')
 Cart.belongsTo(User, {foreignKey: 'userId'})
 Cart.belongsTo(Slime, {foreignKey: 'slimeId'})
 
+LineItem.belongsTo(Slime, {foreignKey: 'slimeId'})
 LineItem.belongsTo(Order, {foreignKey: 'orderId'})
 Order.hasMany(LineItem)
 Order.belongsTo(User)
