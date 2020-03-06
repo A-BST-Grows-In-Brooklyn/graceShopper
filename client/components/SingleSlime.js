@@ -44,7 +44,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const connectedToSingleSlime = connect(mapStateToProps, mapDispatchToProps)(
+const ConnectedToSingleSlime = connect(mapStateToProps, mapDispatchToProps)(
   SingleSlime
 )
-export default connectedToSingleSlime
+export default ConnectedToSingleSlime

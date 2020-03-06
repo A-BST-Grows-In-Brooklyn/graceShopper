@@ -16,14 +16,16 @@ describe('User routes', () => {
 
     beforeEach(() => {
       return User.create({
-        email: codysEmail
+        email: codysEmail,
+        password: 'password',
+        admin: true
       })
     })
 
-    xit('Login', async () => {
+    it('Login', async () => {
       await request(app)
         .post('/auth/login')
-        .send({email: 'Billy.Kuhlman@gmail.com', password: 'password'})
+        .send({email: codysEmail, password: 'password'})
         .expect(200)
     })
 

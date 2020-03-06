@@ -8,8 +8,8 @@ import {
   UserHome,
   Home,
   Cart,
-  connectedToAllSlimes,
-  connectedToSingleSlime
+  ConnectedToAllSlimes,
+  ConnectedToSingleSlime
 } from './components'
 import {me} from './store'
 
@@ -32,8 +32,8 @@ class Routes extends Component {
 
     return (
       <Switch>
-        <Route exact path="/slimes" component={connectedToAllSlimes} />
-        <Route path="/slimes/:id" component={connectedToSingleSlime} />
+        <Route exact path="/slimes" component={ConnectedToAllSlimes} />
+        <Route path="/slimes/:id" component={ConnectedToSingleSlime} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/cart" component={Cart} />

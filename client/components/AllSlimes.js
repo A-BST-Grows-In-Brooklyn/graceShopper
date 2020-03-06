@@ -32,7 +32,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const connectedToAllSlimes = connect(mapStateToProps, mapDispatchToProps)(
+const ConnectedToAllSlimes = connect(mapStateToProps, mapDispatchToProps)(
   AllSlimes
 )
-export default connectedToAllSlimes
+export default ConnectedToAllSlimes

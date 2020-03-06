@@ -57,4 +57,18 @@ describe('Slime model', () => {
     const defaultTextureSlime = await Slime.create(slime)
     expect(defaultTextureSlime.texture).to.equal('cloud')
   })
+
+  it('should default quantity to 100 if no number is specified', async () => {
+    slime.quantity = undefined
+    const badQuantitySlime = await Slime.create(slime)
+    expect(badQuantitySlime.quantity).to.equal(100)
+  })
+
+  it('should default imageURL to specified link if no URL link is specified', async () => {
+    slime.imgURL = undefined
+    const badImgURLSlime = await Slime.create(slime)
+    expect(badImgURLSlime.imgURL).to.equal(
+      'https://cdn.shopify.com/s/files/1/0023/9514/4236/products/Facetune_26-02-2020-21-42-25_grande.jpg?v=1582978921'
+    )
+  })
 })
