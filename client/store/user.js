@@ -15,7 +15,9 @@ const defaultUser = {}
 /**
  * ACTION CREATORS
  */
-const getUser = user => ({type: GET_USER, user})
+const getUser = user => (
+  console.log('INSIDE OF GETUSER ACTION CREATOR'), {type: GET_USER, user}
+)
 const removeUser = () => ({type: REMOVE_USER})
 
 /**
@@ -24,7 +26,10 @@ const removeUser = () => ({type: REMOVE_USER})
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
+    console.log('INSIDE OF ME THUNK')
+    console.log('RES.DATA:', res.data, 'DEFAULTUSER:', defaultUser)
     dispatch(getUser(res.data || defaultUser))
+    console.log('AFTER DISPATCH')
   } catch (err) {
     console.error(err)
   }
@@ -62,6 +67,7 @@ export const logout = () => async dispatch => {
 export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
+      console.log('inside of reducer')
       return action.user
     case REMOVE_USER:
       return defaultUser

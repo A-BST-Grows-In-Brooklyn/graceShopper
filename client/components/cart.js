@@ -1,9 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {viewCart, removeFromCart, incrementCartItem} from '../store/cart'
-import {Grid, Button, IconButton} from '@material-ui/core'
+import {Grid, Button, IconButton, Link} from '@material-ui/core'
 import RemoveCircleOutlinedIcon from '@material-ui/icons/RemoveCircleOutlined'
 import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined'
+import {Redirect} from 'react-router-dom'
 
 class Cart extends React.Component {
   componentDidMount() {
