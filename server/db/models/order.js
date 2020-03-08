@@ -144,7 +144,7 @@ Order.removeItemAll = async (slimeId, userId) => {
       }
     })
     if (!order) {
-      console.err('This order does not exist')
+      console.log('This order does not exist.')
     } else {
       let lineItems = await order.getLineItems()
       let lineItem = findById(lineItems, 'slimeId', slimeId)
@@ -153,7 +153,7 @@ Order.removeItemAll = async (slimeId, userId) => {
         await lineItem.save({fields: ['quantity', 'totalPrice']})
         await order.save()
       } else {
-        console.err('This line item does not exist')
+        console.log(`This line item does not exist.${slimeId}, ${userId}`)
       }
     }
     return order

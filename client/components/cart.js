@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {viewCart, removeFromCart, incrementCartItem} from '../store/cart'
+import {viewCart, addToCart, decrementCart, removeFromCart} from '../store/cart'
+import {viewOrder} from '../store/order'
 import {Grid, Button, IconButton} from '@material-ui/core'
 import RemoveCircleOutlinedIcon from '@material-ui/icons/RemoveCircleOutlined'
 import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined'
@@ -8,10 +9,29 @@ import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined'
 class Cart extends React.Component {
   componentDidMount() {
     this.props.viewCart()
+    this.props.viewOrder()
   }
 
   render() {
+    const order = this.props.order
     const items = this.props.cart
+
+    const comboFuncAdd = async id => {
+      await this.props.addToCart(id, 1)
+      await this.props.viewCart()
+      await this.props.viewOrder()
+    }
+
+    const comboFuncRemove = async id => {
+      await this.props.decrementCart(id, 1)
+      await this.props.viewCart()
+      await this.props.viewOrder()
+    }
+
+    const comboFuncRemoveAll = async id => {
+      await this.props.removeFromCart(id)
+      await this.props.viewOrder()
+    }
 
     return (
       <Grid
@@ -33,26 +53,29 @@ class Cart extends React.Component {
               height="200"
             />
             <div id="cartTextContainer">
-              <IconButton color="primary">
+              <IconButton
+                color="primary"
+                onClick={() => comboFuncRemove(item.slimeId)}
+              >
                 <RemoveCircleOutlinedIcon fontSize="large" />
               </IconButton>
 
               <b id="cartText"> Quantity: {item.quantity}</b>
               <IconButton
                 color="primary"
-                onClick={() => this.props.incrementCartItem(item.id)}
+                onClick={() => comboFuncAdd(item.slimeId)}
               >
                 <AddCircleOutlinedIcon fontSize="large" />
               </IconButton>
             </div>
             <div id="cartTextContainer">
-              <b id="cartText">$ $$.$$</b>
+              <b id="cartText">${item.totalPrice}</b>
             </div>
             <div id="cartTextContainer">
               <Button
                 id="cartText"
                 color="primary"
-                onClick={() => this.props.removeFromCart(item.id)}
+                onClick={() => comboFuncRemoveAll(item.slimeId)}
               >
                 Remove from Cart
               </Button>
@@ -62,10 +85,10 @@ class Cart extends React.Component {
         <div id="cartItem">
           <div id="cartFooter">
             <div id="cartTextContainer">
-              <b id="cartText">Total Num of Slimes</b>
+              <b id="cartText">Total Slimes: {order.totalQuantity}</b>
             </div>
             <div id="cartTextContainer">
-              <b id="cartText">Total cost</b>
+              <b id="cartText">Total cost: ${order.totalPrice}</b>
             </div>
             <div id="cartTextContainer">
               <Button id="cartText" variant="contained" color="primary">
@@ -81,15 +104,19 @@ class Cart extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    cart: state.cart
+    cart: state.cart,
+    order: state.order
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     viewCart: () => dispatch(viewCart()),
-    removeFromCart: itemId => dispatch(removeFromCart(itemId)),
-    incrementCartItem: itemId => dispatch(incrementCartItem(itemId))
+    viewOrder: () => dispatch(viewOrder()),
+    addToCart: (id, quantity) => dispatch(addToCart(id, quantity)),
+    decrementCart: (id, quantity) => dispatch(decrementCart(id, quantity)),
+
+    removeFromCart: itemId => dispatch(removeFromCart(itemId))
   }
 }
 
