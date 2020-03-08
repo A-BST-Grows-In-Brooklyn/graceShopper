@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Redirect} from 'react-router-dom'
-import {me} from '../store'
+import {me, updateInfo} from '../store'
 
 class UserForm extends React.Component {
   constructor() {
@@ -37,8 +36,10 @@ class UserForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    alert('Address Updated')
     // send editUser thunk creator which sends post request w/ data to edit the database
+    console.log('INSIDE HANDLE SUBMIT: BEFORE: ')
+    this.props.updateInfo(this.props.user.id, this.state)
+    console.log('INSIDE HANDLE SUBMIT: AFTER: ')
   }
 
   render() {
@@ -86,7 +87,12 @@ class UserForm extends React.Component {
             placeholder="Field Required"
           />
         </div>
-        {this.props.edit ? <button type="submit">Update</button> : null}
+        {this.props.edit ? (
+          <button type="submit" onClick={this.handleSubmit}>
+            {' '}
+            Update
+          </button>
+        ) : null}
       </form>
     )
   }
@@ -97,7 +103,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  me: () => dispatch(me())
+  me: () => dispatch(me()),
+  updateInfo: (id, updatedInfo) => dispatch(updateInfo(id, updatedInfo))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserForm)
