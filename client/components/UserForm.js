@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Redirect} from 'react-router-dom'
 import {me, updateInfo} from '../store'
 
 class UserForm extends React.Component {
@@ -37,7 +36,6 @@ class UserForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    alert('Address Updated')
     // send editUser thunk creator which sends post request w/ data to edit the database
     console.log('INSIDE HANDLE SUBMIT: BEFORE: ')
     this.props.updateInfo(this.props.user.id, this.state)

@@ -10,8 +10,6 @@ class Checkout extends React.Component {
   constructor() {
     super()
     this.state = {
-      name: '',
-      email: '',
       submitted: false
     }
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -33,11 +31,6 @@ class Checkout extends React.Component {
     let cart = this.props.cart
 
     console.log('INSIDE OF CHECKOUT COMPONENT!', 'CART:', cart)
-
-    this.setState({
-      name: user.name,
-      email: user.email
-    })
   }
 
   handleChange(event) {
