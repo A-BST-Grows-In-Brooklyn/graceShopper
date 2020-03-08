@@ -48,7 +48,6 @@ router.put('/remove', async (req, res, next) => {
     const userId = req.user.id
     const itemId = req.body.itemId
     const quantity = req.body.quantity
-    console.log('check')
     let order = await Order.removeItem(itemId, quantity, userId)
     if (order) {
       res.json(order)
@@ -65,7 +64,7 @@ router.get('/order', async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
-        userId: 1,
+        userId: req.user.id,
         completed: false
       }
     })

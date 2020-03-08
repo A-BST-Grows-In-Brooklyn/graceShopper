@@ -1,15 +1,32 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {StyledTableCell} from '../theme/reactTheme'
+
 import {viewCart, addToCart, decrementCart, removeFromCart} from '../store/cart'
 import {viewOrder} from '../store/order'
-import {Grid, Button, IconButton} from '@material-ui/core'
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  TableSortLabel,
+  Paper,
+  Button,
+  IconButton,
+  Tab
+} from '@material-ui/core'
 import RemoveCircleOutlinedIcon from '@material-ui/icons/RemoveCircleOutlined'
 import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined'
+import HighlightOffTwoToneIcon from '@material-ui/icons/HighlightOffTwoTone'
 
 class Cart extends React.Component {
   componentDidMount() {
-    this.props.viewCart()
     this.props.viewOrder()
+    this.props.viewCart()
   }
 
   render() {
@@ -34,70 +51,78 @@ class Cart extends React.Component {
     }
 
     return (
-      <Grid
-        container
-        direction="column"
-        justify="space-evenly"
-        alignItems="stretch"
-      >
-        <h1 id="cartHeader">My Cart</h1>
-        {items.map(item => (
-          <div id="cartItem" key={item.id}>
-            <div id="cartTextContainer">
-              <b id="cartText">{item.slime.name}</b>
-            </div>
-            <img
-              src={item.slime.imgURL}
-              alt="Slime Photo"
-              width="200"
-              height="200"
-            />
-            <div id="cartTextContainer">
-              <IconButton
-                color="primary"
-                onClick={() => comboFuncRemove(item.slimeId)}
-              >
-                <RemoveCircleOutlinedIcon fontSize="large" />
-              </IconButton>
+      <div id="outerCartContainer">
+        <h1 id="cartHeader">Your Shopping Cart</h1>
+        <TableContainer component={Paper}>
+          <Table m="5rem">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell align="center">Product</StyledTableCell>
+                <StyledTableCell align="center">Quantity</StyledTableCell>
+                <StyledTableCell align="center">Cost</StyledTableCell>
+                <StyledTableCell align="center">
+                  Remove From Cart
+                </StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {items.map(item => (
+                <TableRow key={item.id}>
+                  <TableCell component="th" scope="row">
+                    <div id="slimeCartItem">
+                      <img
+                        src={item.slime.imgURL}
+                        alt="Slime Photo"
+                        width="200"
+                        height="200"
+                      />
+                      <p>
+                        <b>{item.slime.name}</b>
+                      </p>
+                    </div>
+                  </TableCell>
 
-              <b id="cartText"> Quantity: {item.quantity}</b>
-              <IconButton
-                color="primary"
-                onClick={() => comboFuncAdd(item.slimeId)}
-              >
-                <AddCircleOutlinedIcon fontSize="large" />
-              </IconButton>
-            </div>
-            <div id="cartTextContainer">
-              <b id="cartText">${item.totalPrice}</b>
-            </div>
-            <div id="cartTextContainer">
-              <Button
-                id="cartText"
-                color="primary"
-                onClick={() => comboFuncRemoveAll(item.slimeId)}
-              >
-                Remove from Cart
-              </Button>
-            </div>
-          </div>
-        ))}
-        <div id="cartItem">
-          <div id="cartFooter">
-            <div id="cartTextContainer">
-              <b id="cartText">Total Slimes: {order.totalQuantity}</b>
-            </div>
-            <div id="cartTextContainer">
-              <b id="cartText">Total cost: ${order.totalPrice}</b>
-            </div>
-            <div id="cartTextContainer">
-              <Button id="cartText" variant="contained" color="primary">
-                Checkout
-              </Button>
-            </div>
-          </div>
-        </div>
-      </Grid>
+                  <TableCell align="center">
+                    <IconButton
+                      color="primary"
+                      onClick={() => comboFuncRemove(item.slimeId)}
+                    >
+                      <RemoveCircleOutlinedIcon fontSize="large" />
+                    </IconButton>
+                    <b id="cartText"> Quantity: {item.quantity}</b>
+                    <IconButton
+                      color="primary"
+                      onClick={() => comboFuncAdd(item.slimeId)}
+                    >
+                      <AddCircleOutlinedIcon fontSize="large" />
+                    </IconButton>
+                  </TableCell>
+                  <TableCell align="center">${item.totalPrice}</TableCell>
+                  <TableCell align="center">
+                    <IconButton
+                      color="primary"
+                      onClick={() => comboFuncRemoveAll(item.slimeId)}
+                    >
+                      <HighlightOffTwoToneIcon fontSize="large" />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+
+              <TableRow>
+                <TableCell align="center">Totals --</TableCell>
+                <TableCell align="center">{order.totalQuantity}</TableCell>
+                <TableCell align="center">${order.totalPrice}</TableCell>
+                <TableCell align="center">
+                  <Button variant="contained" color="primary">
+                    Checkout
+                  </Button>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
     )
   }
 }
