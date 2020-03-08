@@ -70,7 +70,7 @@ class Cart extends React.Component {
             </div>
             <div id="cartTextContainer">
               <Button id="cartText" variant="contained" color="primary">
-                Checkout
+                <Link href="/checkout">Checkout</Link>
               </Button>
             </div>
           </div>

@@ -3,13 +3,14 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import UserForm from './userform'
+import OrderHistory from './OrderHistory'
 
 export const UserHome = props => {
   const {user} = props
 
-  // if (!email) {
-  //   return <Redirect to="/login" />
-  // }
+  if (!user.id) {
+    return <Redirect to="/login" />
+  }
 
   return (
     <div>
@@ -20,6 +21,7 @@ export const UserHome = props => {
       <h3>Primary Payment Information</h3>
       <h3>Email & Password</h3>
       <h2>Your Order History</h2>
+      <OrderHistory />
     </div>
   )
 }
