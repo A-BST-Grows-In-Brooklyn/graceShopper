@@ -4,10 +4,12 @@ import {viewCart, removeFromCart, incrementCartItem} from '../store/cart'
 import {Grid, Button, IconButton} from '@material-ui/core'
 import RemoveCircleOutlinedIcon from '@material-ui/icons/RemoveCircleOutlined'
 import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined'
+import {getGuestCart} from '../store/localStorage'
 
 class Cart extends React.Component {
   componentDidMount() {
     this.props.viewCart()
+    getGuestCart()
   }
 
   render() {
@@ -81,7 +83,8 @@ class Cart extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    cart: state.cart
+    cart: state.cart,
+    isLoggedIn: !!state.user.id
   }
 }
 

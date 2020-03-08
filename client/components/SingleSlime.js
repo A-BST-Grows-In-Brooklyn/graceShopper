@@ -1,7 +1,11 @@
 import React from 'react'
-
 import {connect} from 'react-redux'
-import {fetchSelectedSlime, addToCart} from '../store'
+import {
+  fetchSelectedSlime,
+  addToCart,
+  addToGuestCart,
+  getGuestCart
+} from '../store'
 
 import {Button} from '@material-ui/core'
 class SingleSlime extends React.Component {
@@ -22,7 +26,10 @@ class SingleSlime extends React.Component {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => this.props.addToCart(slime.id, 1)}
+          onClick={() => {
+            this.props.addToCart(slime.id, 1)
+            this.props.addToGuestCart(slime)
+          }}
         >
           Add to Cart
         </Button>

@@ -26,7 +26,7 @@ export const viewCart = () => {
   return async (dispatch, next) => {
     try {
       getGuestCart()
-      console.log(localStorage)
+      console.log(getGuestCart())
       const {data} = await axios.get('/api/cart')
       dispatch(getCart(data))
     } catch (error) {
@@ -38,8 +38,6 @@ export const viewCart = () => {
 export const addToCart = (itemId, quantity) => {
   return async (dispatch, next) => {
     const itemToAdd = {itemId: itemId, quantity: quantity}
-    addToGuestCart(itemToAdd)
-    console.log(localStorage)
     try {
       const {data} = await axios.post(`/api/cart/`, itemToAdd)
       dispatch(addItem(data))
