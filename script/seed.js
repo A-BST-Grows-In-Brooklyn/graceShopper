@@ -1,6 +1,6 @@
 const {green, red} = require('chalk')
 const db = require('../server/db/db')
-const {User, Slime, Cart} = require('../server/db/models')
+const {User, Slime, LineItem, Order} = require('../server/db/models')
 const faker = require('faker')
 
 function generateSlimes() {
@@ -57,27 +57,6 @@ function generateUsers() {
 
 let usersArray = generateUsers()
 
-function generateLineItems() {
-  let lineItems = []
-  for (let i = 0; i < 100; i++) {
-    lineItems.push({
-      slimeId: faker.random.number(100),
-      quantity: faker.random.number(10)
-    })
-  }
-}
-
-let lineItemsArray = generateLineItems()
-
-// MAY NOT NEED THIS ^^^: if you create associations between slimes and orders it should generate lineitems automatically?
-
-function generateOrder() {
-  let orders = []
-  for (let i = 0; i < 100; i++) {
-    orders.push({})
-  }
-}
-
 const seed = async () => {
   try {
     await db.sync({force: true})
@@ -94,16 +73,36 @@ const seed = async () => {
       })
     )
 
-    for (let i = 0; i < 20; i++) {
-      // await createdUsers[i].addSlime(faker.random.arrayElement(createdSlimes))
+    for (let i = 0; i < 100; i++) {
       let randomUser = faker.random.arrayElement(createdUsers)
       let randomSlime = faker.random.arrayElement(createdSlimes)
+      let randomOrder = await Order.findOne({
+        where: {
+          userId: randomUser.id,
+          completed: false
+        }
+      })
+      let randomLineItem = false
+      if (randomOrder) {
+        randomLineItem = await LineItem.findOne({
+          where: {
+            orderId: randomOrder.id,
+            slimeId: randomSlime.id
+          }
+        })
+      }
+      let qty = faker.random.number(10)
 
-      await randomUser.addSlime(randomSlime)
+      if (randomOrder) {
+        if (randomLineItem) {
+          await Order.updateOrderUpdateItem(randomOrder, randomLineItem, 1)
+        } else {
+          await Order.updateOrderNewItem(randomOrder, randomSlime.id, qty)
+        }
+      } else if (!randomOrder) {
+        await Order.createOrderInstance(randomSlime.id, qty, randomUser.id)
+      }
     }
-
-    // if the cart table already contains a row that has createdUsers[i] and the randomly
-    // chosen createdSlimes from the array, up the quantity at that row
   } catch (error) {
     console.log(red(error))
   }
