@@ -62,10 +62,10 @@ class Checkout extends React.Component {
         </div>
 
         <h2>4. Order Total</h2>
-        <p>Subtotal: {`$ ${this.props.orders.totalPrice}`}</p>
+        <p>Subtotal: {`$ ${this.props.orders.totalPrice / 100}`}</p>
         <p>Shipping:</p>
         <p>Tax:</p>
-        <p>Order Total: {`$ ${this.props.orders.totalPrice}`}</p>
+        <p>Order Total: {`$ ${this.props.orders.totalPrice / 100}`}</p>
 
         {/* If not a user we can add a field to add a password and create user. */}
 

@@ -13,14 +13,14 @@ const Slime = db.define('slime', {
     type: Sequelize.ENUM('cloud', 'jelly', 'foam', 'butter')
   },
   price: {
-    type: Sequelize.DECIMAL(10, 2),
+    type: Sequelize.INTEGER,
     validate: {
-      min: 1.0
+      min: 100
     }
   },
   quantity: {
     type: Sequelize.INTEGER,
-    defaultValue: 100
+    defaultValue: 100.0
   },
   imgURL: {
     type: Sequelize.TEXT,

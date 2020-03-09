@@ -17,7 +17,7 @@ function generateSlimes() {
         'pink'
       ]),
       texture: faker.random.arrayElement(['cloud', 'jelly', 'foam', 'butter']),
-      price: faker.commerce.price(1.0, 100.0, 2),
+      price: faker.commerce.price(100, 10000, 0),
       quantity: faker.random.number(100),
       imgURL: faker.random.arrayElement([
         'https://www.thesprucecrafts.com/thmb/7OZW2YwWnMAud9M1faNCk3oGhmk=/736x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Item1FluffySlime-5b2eef9aff1b780037e47490.jpg',

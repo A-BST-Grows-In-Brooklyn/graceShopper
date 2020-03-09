@@ -16,7 +16,7 @@ class SingleSlime extends React.Component {
       <div>
         <h1>{slime.name}</h1>
         <img src={slime.imgURL} alt="Slime Photo" width="200" height="200" />
-        <h4>${slime.price}</h4>
+        <h4>${slime.price / 100}</h4>
         <h4>color : {slime.color}</h4>
         <h4>texture : {slime.texture}</h4>
         <Button

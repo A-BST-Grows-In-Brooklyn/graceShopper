@@ -99,7 +99,7 @@ class Cart extends React.Component {
                       <AddCircleOutlinedIcon fontSize="large" />
                     </IconButton>
                   </TableCell>
-                  <TableCell align="center">${item.totalPrice}</TableCell>
+                  <TableCell align="center">${item.totalPrice / 100}</TableCell>
                   <TableCell align="center">
                     <IconButton
                       color="primary"
@@ -114,7 +114,7 @@ class Cart extends React.Component {
               <TableRow>
                 <TableCell align="center">Totals --</TableCell>
                 <TableCell align="center">{order.totalQuantity}</TableCell>
-                <TableCell align="center">${order.totalPrice}</TableCell>
+                <TableCell align="center">${order.totalPrice / 100}</TableCell>
                 <TableCell align="center">
                   <Button variant="contained" color="primary">
                     <Link href="/checkout">Checkout</Link>

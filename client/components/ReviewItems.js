@@ -15,7 +15,7 @@ class ReviewItems extends React.Component {
           return (
             <div key={item.id}>
               <div>Product: {item.slime.name} </div>
-              <div>Price: ${item.totalPrice}</div>
+              <div>Price: ${item.totalPrice / 100}</div>
               <div>Quantity: {item.quantity}</div>
             </div>
           )
