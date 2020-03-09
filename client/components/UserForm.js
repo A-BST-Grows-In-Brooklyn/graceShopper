@@ -36,10 +36,7 @@ class UserForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    // send editUser thunk creator which sends post request w/ data to edit the database
-    console.log('INSIDE HANDLE SUBMIT: BEFORE: ')
     this.props.updateInfo(this.props.user.id, this.state)
-    console.log('INSIDE HANDLE SUBMIT: AFTER: ')
   }
 
   render() {

@@ -18,9 +18,6 @@ const LineItem = require('./lineItem')
  * instead of: const User = require('../db/models/user')
  */
 
-Cart.belongsTo(User, {foreignKey: 'userId'})
-Cart.belongsTo(Slime, {foreignKey: 'slimeId'})
-
 LineItem.belongsTo(Slime, {foreignKey: 'slimeId'})
 LineItem.belongsTo(Order, {foreignKey: 'orderId'})
 Order.hasMany(LineItem)

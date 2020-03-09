@@ -41,7 +41,6 @@ router.get('/lineItems/:id', async (req, res, next) => {
         orderId: req.params.id
       }
     })
-    console.log('*****', lineItems)
     res.json(lineItems)
   } catch (error) {
     next(error)
