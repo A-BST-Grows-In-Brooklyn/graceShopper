@@ -52,10 +52,9 @@ export const fetchLineItemsByOrder = id => {
   }
 }
 
-export const completeOrders = id => {
+export const completeOrder = id => {
   return async (dispatch, next) => {
     try {
-      console.log()
       await axios.put(`/api/order/completeOrder/${id}`, null)
     } catch (error) {
       console.error(error)

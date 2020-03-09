@@ -23,12 +23,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         <Button component={Link} to="/slimes">
           Products
         </Button>
-        <TextField
-          id="outlined-search"
-          label="search products"
-          type="search"
-          variant="outlined"
-        />
+
         {isLoggedIn ? (
           <div id="login">
             {/* The navbar will show these links after you log in */}

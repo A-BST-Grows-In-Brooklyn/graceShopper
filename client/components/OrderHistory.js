@@ -12,8 +12,11 @@ class OrderHistory extends React.Component {
     return this.props.completedOrders.map(order => {
       return (
         <div key={order.id}>
-          {order.id}
-          <OrderHistoryList order={order} />
+          <div>Id: {order.id}</div>
+          <div>Total Quantity: {order.totalQuantity}</div>
+          <div>Total Price: {order.totalPrice}</div>
+
+          {/* <OrderHistoryList order={order} /> */}
         </div>
       )
     })

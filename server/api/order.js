@@ -1,16 +1,19 @@
 const router = require('express').Router()
-const {Order, LineItem} = require('../db/models')
+const {Order, LineItem, User} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const items = await Order.findAll({
+    let items = await Order.findAll({
       where: {
         userId: req.user.id,
         completed: false
       }
     })
-    console.log('ITEMS:', items)
+    if (items.length <= 0) {
+      let item = await Order.create({userId: req.user.id})
+      items = [item]
+    }
     res.json(items)
   } catch (error) {
     next(error)
