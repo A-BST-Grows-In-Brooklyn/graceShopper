@@ -1,7 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {StyledTableCell} from '../theme/reactTheme'
-import {getGuestCart} from '../store/localStorage'
+import {
+  getGuestCart,
+  addToGuestCart,
+  removeFromGuestCart,
+  decrementGuestCart
+} from '../store/localStorage'
 import {viewCart, addToCart, decrementCart, removeFromCart} from '../store/cart'
 import {fetchOrder} from '../store/orders'
 
@@ -33,8 +38,8 @@ class Cart extends React.Component {
 
   render() {
     const order = this.props.order
-    // const items = this.props.cart
-    const items = getGuestCart()
+    const items = this.props.cart
+    // const items = getGuestCart()
 
     const comboFuncAdd = async id => {
       await this.props.addToCart(id, 1)
@@ -88,14 +93,21 @@ class Cart extends React.Component {
                   <TableCell align="center">
                     <IconButton
                       color="primary"
-                      onClick={() => comboFuncRemove(item.slimeId)}
+                      onClick={() => {
+                        comboFuncRemove(item.slimeId)
+                        decrementGuestCart(item.slimeId)
+                      }}
                     >
                       <RemoveCircleOutlinedIcon fontSize="large" />
                     </IconButton>
                     <b id="cartText"> Quantity: {item.quantity}</b>
                     <IconButton
                       color="primary"
-                      onClick={() => comboFuncAdd(item.slimeId)}
+                      onClick={() => {
+                        comboFuncAdd(item.slimeId)
+                        addToGuestCart(item)
+                        getGuestCart()
+                      }}
                     >
                       <AddCircleOutlinedIcon fontSize="large" />
                     </IconButton>
@@ -104,7 +116,10 @@ class Cart extends React.Component {
                   <TableCell align="center">
                     <IconButton
                       color="primary"
-                      onClick={() => comboFuncRemoveAll(item.slimeId)}
+                      onClick={() => {
+                        comboFuncRemoveAll(item.slimeId)
+                        removeFromGuestCart(item.slimeId)
+                      }}
                     >
                       <HighlightOffTwoToneIcon fontSize="large" />
                     </IconButton>

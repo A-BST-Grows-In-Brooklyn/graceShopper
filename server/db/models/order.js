@@ -16,11 +16,7 @@ const Order = db.define('order', {
   },
   userId: {
     type: Sequelize.INTEGER,
-    references: {
-      model: User,
-      key: 'id'
-    },
-    allowNull: false
+    allowNull: true
   },
   totalPrice: {
     type: Sequelize.INTEGER,

@@ -4,7 +4,6 @@ import {StyledTableCell} from '../theme/reactTheme'
 
 import {
   setGuestCart,
-  setGuestOrder,
   getGuestCart,
   getGuestOrder,
   addToGuestCart,
@@ -33,18 +32,16 @@ import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined'
 import HighlightOffTwoToneIcon from '@material-ui/icons/HighlightOffTwoTone'
 
 export default class GuestCart extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      cart: [],
-      order: {}
+      guestCart: []
     }
   }
 
   componentDidMount() {
     const guestCart = getGuestCart()
-    const guestOrder = getGuestOrder()
-    this.setState({cart: guestCart, order: guestOrder})
+    this.setState({guestCart: guestCart})
   }
 
   render() {

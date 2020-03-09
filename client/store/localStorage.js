@@ -49,29 +49,11 @@ export const addToGuestCart = itemToAdd => {
   }
 }
 
-// export const addToGuestOrder = () => {
-//   try {
-//     const serializedOrder = getGuestOrder()
-//     {
-//       id: 1,
-//       userId: 101,
-//       totalPrice: 105,
-//       totalQuantity: 3,
-//       completed: false,
-//       address: "No address given"
-//     }
-
-//     setGuestOrder(serializedOrder)
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
-
 export const decrementGuestCart = itemId => {
   try {
     const serializedCart = getGuestCart()
     const itemToDecrement = serializedCart.findIndex(
-      item => item.itemId === itemId
+      item => item.slimeId === itemId
     )
     serializedCart[itemToDecrement].quantity -= 1
     setGuestCart(serializedCart)
@@ -85,7 +67,7 @@ export const removeFromGuestCart = itemId => {
   try {
     const serializedCart = getGuestCart()
     const itemToRemove = serializedCart.findIndex(
-      item => item.itemId === itemId
+      item => item.slimeId === itemId
     )
     serializedCart.splice(itemToRemove, 1)
     setGuestCart(serializedCart)
@@ -119,3 +101,22 @@ export const getGuestOrder = () => {
     console.error(error)
   }
 }
+
+// export const addToGuestOrder = () => {
+//   try {
+//     const serializedOrder = getGuestOrder()
+//     {
+//       userId: 0,
+//       totalPrice: ,
+//       totalQuantity: ,
+//       completed: true,
+//       address: [],
+//       createdAt: now,
+//       updatedAt: now
+//     }
+
+//     setGuestOrder(serializedOrder)
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
