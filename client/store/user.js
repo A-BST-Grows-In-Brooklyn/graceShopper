@@ -6,6 +6,7 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
+const UPDATE_USER = 'UPDATE_USER'
 
 /**
  * INITIAL STATE
@@ -15,16 +16,25 @@ const defaultUser = {}
 /**
  * ACTION CREATORS
  */
-const getUser = user => ({type: GET_USER, user})
+const getUser = user => (
+  console.log('INSIDE OF GETUSER ACTION CREATOR'), {type: GET_USER, user}
+)
 const removeUser = () => ({type: REMOVE_USER})
 
+const updateUser = user => ({
+  type: UPDATE_USER,
+  user
+})
 /**
  * THUNK CREATORS
  */
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
+    console.log('INSIDE OF ME THUNK')
+    console.log('RES.DATA:', res.data, 'DEFAULTUSER:', defaultUser)
     dispatch(getUser(res.data || defaultUser))
+    console.log('AFTER DISPATCH')
   } catch (err) {
     console.error(err)
   }
@@ -56,15 +66,29 @@ export const logout = () => async dispatch => {
   }
 }
 
+export const updateInfo = (id, updatedInfo) => async dispatch => {
+  try {
+    console.log('INSIDE THUNK')
+    const {data} = await axios.put(`/api/users/${id}`, updatedInfo)
+    console.log('GOT DATA?', data)
+    dispatch(updateUser(data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 /**
  * REDUCER
  */
 export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
+      console.log('inside of reducer')
       return action.user
     case REMOVE_USER:
       return defaultUser
+    case UPDATE_USER:
+      return action.user
     default:
       return state
   }

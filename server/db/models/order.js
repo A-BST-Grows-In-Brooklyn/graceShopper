@@ -35,8 +35,8 @@ const Order = db.define('order', {
     defaultValue: false
   },
   address: {
-    type: Sequelize.STRING,
-    defaultValue: 'No address given'
+    type: Sequelize.ARRAY(Sequelize.STRING),
+    defaultValue: ['No address given']
   }
 })
 

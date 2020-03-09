@@ -13,13 +13,13 @@ router.get('/', async (req, res, next) => {
         completed: false
       }
     })
-    const lineItems = await order.getLineItems({
-      include: Slime
-    })
-
-    if (lineItems) {
-      res.json(lineItems)
+    let lineItems = []
+    if (order) {
+      lineItems = await order.getLineItems({
+        include: Slime
+      })
     }
+    res.json(lineItems)
   } catch (error) {
     next(error)
   }
@@ -53,23 +53,6 @@ router.put('/remove', async (req, res, next) => {
       res.json(order)
     } else {
       res.sendStatus(404)
-    }
-  } catch (error) {
-    next(error)
-  }
-})
-
-//generate order//
-router.get('/order', async (req, res, next) => {
-  try {
-    const order = await Order.findOne({
-      where: {
-        userId: req.user.id,
-        completed: false
-      }
-    })
-    if (order) {
-      res.json(order)
     }
   } catch (error) {
     next(error)

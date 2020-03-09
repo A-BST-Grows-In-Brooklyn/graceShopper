@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 const Slime = require('./slime')
-const Order = require('./order')
+//const Order = require('./order')
 
 const LineItem = db.define('lineItem', {
   id: {
