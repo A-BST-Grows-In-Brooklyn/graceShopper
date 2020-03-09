@@ -36,32 +36,19 @@ form div {
   justify-content: space-between;
 }
 
-#cart {
+#cartHeader {
+  display: flex;
+  justify-content: center;
+  margin-top: 3em;
+}
+
+#slimeCartItem {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  align-items: center;
 }
-
-#cartItem {
-  display: flex;
-  width: 100%;
-  justify-content: space-around;
-  align-content: center;
-}
-
-#cartFooter {
-  width: 60%;
-  margin-left: 40%;
-  display: flex;
-  justify-content: inherit;
-}
-
-#cartTextContainer {
-  display: flex;
-}
-
-#cartText {
-  align-self: center;
+#outerCartContainer {
+  margin: 2em;
 }
 #slimeIcon {
   width: 3rem;

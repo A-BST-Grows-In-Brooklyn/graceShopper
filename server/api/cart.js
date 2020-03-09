@@ -1,44 +1,39 @@
 const router = require('express').Router()
-const {Cart, Slime} = require('../db/models')
+const {Order, Slime} = require('../db/models')
 module.exports = router
 
 //mounted on /api/cart
 
-//generate cart//
+//generate lineItems//
 router.get('/', async (req, res, next) => {
   try {
-    const items = await Cart.findAll({
+    let order = await Order.findOne({
       where: {
-        userId: req.user.id
-      },
-      include: [{model: Slime}]
+        userId: req.user.id,
+        completed: false
+      }
     })
-    res.json(items)
+    let lineItems = []
+    if (order) {
+      lineItems = await order.getLineItems({
+        include: Slime
+      })
+    }
+    res.json(lineItems)
   } catch (error) {
     next(error)
   }
 })
 
-//update quantity from cart
-router.put('/increment', async (req, res, next) => {
+//add item to cart from SingleSlime
+router.put('/add', async (req, res, next) => {
   try {
-    const currentUser = req.user.id
+    const userId = req.user.id
     const itemId = req.body.itemId
-
-    let instanceToUpdate = await Cart.findOne({
-      where: {
-        userId: 4,
-        slimeId: 4
-      }
-    })
-    if (instanceToUpdate) {
-      await instanceToUpdate.update({
-        quantity: instanceToUpdate.quantity + 1
-      })
-      instanceToUpdate = instanceToUpdate.reload()
-    }
-    if (instanceToUpdate) {
-      res.json(instanceToUpdate)
+    const quantity = req.body.quantity
+    let order = await Order.addItem(itemId, quantity, userId)
+    if (order) {
+      res.json(order)
     } else {
       res.sendStatus(404)
     }
@@ -47,34 +42,15 @@ router.put('/increment', async (req, res, next) => {
   }
 })
 
-//add item to cart from SingleSlime
-router.post('/', async (req, res, next) => {
+//remove item to cart from SingleSlime
+router.put('/remove', async (req, res, next) => {
   try {
-    const currentUser = req.user.id
+    const userId = req.user.id
     const itemId = req.body.itemId
     const quantity = req.body.quantity
-    const itemToUpdate = await Cart.findOne({
-      where: {
-        userId: currentUser,
-        slimeId: itemId
-      }
-    })
-    let item = {}
-    if (itemToUpdate) {
-      await itemToUpdate.update({
-        quantity: itemToUpdate.quantity + quantity
-      })
-      item = itemToUpdate.reload()
-    } else {
-      item = await Cart.create({
-        userId: currentUser,
-        slimeId: itemId,
-        quantity: quantity
-      })
-    }
-
-    if (item) {
-      res.json(item)
+    let order = await Order.removeItem(itemId, quantity, userId)
+    if (order) {
+      res.json(order)
     } else {
       res.sendStatus(404)
     }
@@ -85,10 +61,11 @@ router.post('/', async (req, res, next) => {
 
 router.delete('/:itemId', async (req, res, next) => {
   try {
-    const itemToRemove = await Cart.findByPk(req.params.itemId)
+    const userId = req.user.id
+    const itemId = Number(req.params.itemId)
+    const itemToRemove = await Order.removeItemAll(itemId, userId)
 
     if (itemToRemove) {
-      await itemToRemove.destroy()
       res.sendStatus(204)
     } else {
       res.sendStatus(404)

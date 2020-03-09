@@ -9,16 +9,14 @@ import {
 
 const GET_CART = 'GET_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
+const DECREMENT_ITEM = 'DECREMENT ITEM'
 const REMOVE_ITEM = 'REMOVE_ITEM'
-const INCREMENT_ITEM = 'INCREMENT_ITEN'
-// const SUB_QUANTITY = 'SUB_QUANTITY'
-// const ADD_QUANTITY = 'ADD_QUANTITY'
 
 export const getCart = cart => ({type: GET_CART, cart})
 
 export const addItem = item => ({type: ADD_TO_CART, item})
 
-export const incrementItem = item => ({type: INCREMENT_ITEM, item})
+export const decrementItem = item => ({type: DECREMENT_ITEM, item})
 
 export const removeItem = itemId => ({type: REMOVE_ITEM, itemId})
 
@@ -41,21 +39,20 @@ export const addToCart = (itemId, quantity) => {
     addToGuestCart(itemToAdd)
     console.log(localStorage)
     try {
-      const {data} = await axios.post(`/api/cart/`, itemToAdd)
+      const {data} = await axios.put(`/api/cart/add`, itemToAdd)
       dispatch(addItem(data))
-      dispatch(viewCart())
     } catch (error) {
       next(error)
     }
   }
 }
 
-export const incrementCartItem = itemId => {
+export const decrementCart = (itemId, quantity) => {
   return async (dispatch, next) => {
-    const itemToAdd = {itemId: itemId}
+    const itemToRemove = {itemId: itemId, quantity: quantity}
     try {
-      const {data} = await axios.put(`/api/cart/increment`, itemToAdd)
-      dispatch(incrementItem(data))
+      const {data} = await axios.put(`/api/cart/remove`, itemToRemove)
+      dispatch(decrementItem(data))
     } catch (error) {
       next(error)
     }
@@ -65,10 +62,8 @@ export const incrementCartItem = itemId => {
 export const removeFromCart = itemId => {
   return async (dispatch, next) => {
     try {
-      removeFromGuestCart(itemId)
-      const {data} = await axios.delete(`/api/cart/${itemId}`)
-      dispatch(removeItem(data))
-      dispatch(viewCart())
+      await axios.delete(`/api/cart/${itemId}`)
+      dispatch(removeItem(itemId))
     } catch (error) {
       next(error)
     }
@@ -86,12 +81,11 @@ export default function(state = [], action) {
     case ADD_TO_CART:
       return state
 
-    case INCREMENT_ITEM: {
-      return [...state]
-    }
+    case DECREMENT_ITEM:
+      return state
 
     case REMOVE_ITEM: {
-      const newCart = state.filter(item => item.id !== action.itemId)
+      const newCart = state.filter(item => item.slimeId !== action.itemId)
       return [...newCart]
     }
     default:
