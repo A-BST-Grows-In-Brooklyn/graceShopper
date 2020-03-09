@@ -1,5 +1,4 @@
 const User = require('./user')
-const Cart = require('./cart')
 const Slime = require('./slime')
 const Order = require('./order')
 const LineItem = require('./lineItem')
@@ -23,13 +22,9 @@ LineItem.belongsTo(Order, {foreignKey: 'orderId'})
 Order.hasMany(LineItem)
 Order.belongsTo(User)
 
-User.belongsToMany(Slime, {through: Cart})
-Slime.belongsToMany(User, {through: Cart})
-
 module.exports = {
   User,
   Slime,
-  Cart,
   LineItem,
   Order
 }
