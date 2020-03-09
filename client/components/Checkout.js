@@ -18,19 +18,11 @@ class Checkout extends React.Component {
 
   async componentDidMount() {
     await this.props.me()
-    await this.props.fetchOrder() //gets the order object from Orders, which updates the order state object
+    await this.props.fetchOrder()
     let user = this.props.user
-    console.log(
-      'WHAT IS ORDERS STATE ONCE FETCHORDER HAPPENS',
-      this.props.orders
-    )
-
-    console.log('INSIDE OF CHECKOUT COMPONENT!', 'USER:', user)
 
     await this.props.viewCart()
     let cart = this.props.cart
-
-    console.log('INSIDE OF CHECKOUT COMPONENT!', 'CART:', cart)
   }
 
   handleChange(event) {
@@ -41,8 +33,6 @@ class Checkout extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    // take data from checkout and store it in order history
-    // take data from order_products through table and change status to complete
     this.setState({
       submitted: true
     })
@@ -69,8 +59,6 @@ class Checkout extends React.Component {
         <h2>3. Review Items</h2>
         <div>
           <ReviewItems />
-          {/* Insert single view items w/ qty - no option to edit. */}
-          {/* Create single view item component to make this easier. */}
         </div>
 
         <h2>4. Order Total</h2>
@@ -97,7 +85,7 @@ class Checkout extends React.Component {
 const mapStateToProps = state => ({
   user: state.user,
   cart: state.cart,
-  orders: state.orders.order //allows us to access the total price from the orders
+  orders: state.orders.order
 })
 
 const mapDispatchToProps = dispatch => ({

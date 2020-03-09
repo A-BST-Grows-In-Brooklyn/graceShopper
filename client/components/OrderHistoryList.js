@@ -9,7 +9,6 @@ class OrderHistoryList extends React.Component {
   }
 
   render() {
-    console.log('LINE ITEMS: ', this.props.lineItems)
     return (
       <div>
         {this.props.lineItems

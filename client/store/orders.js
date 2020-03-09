@@ -22,7 +22,6 @@ export const fetchOrder = () => {
   return async (dispatch, next) => {
     try {
       const {data} = await axios.get('/api/order')
-      console.log('THIS IS THE DATA:', data)
       dispatch(getOrder(data[0]))
     } catch (error) {
       console.error(error)

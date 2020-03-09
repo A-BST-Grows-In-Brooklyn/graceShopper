@@ -3,10 +3,6 @@ import {connect} from 'react-redux'
 import {fetchOrder} from '../store'
 
 class Confirmation extends React.Component {
-  // async componentDidMount() {
-  //   await this.props.fetchOrder()
-  // }
-
   render() {
     return (
       <div>
@@ -24,14 +20,4 @@ const mapStateToProp = state => {
   }
 }
 
-// const mapDispatch = (dispatch) => {
-//   return {
-//     fetchOrder: () => dispatch(fetchOrder())
-//   }
-// }
-
 export default connect(mapStateToProp, null)(Confirmation)
-
-//export default Confirmation
-
-// mapStateToProps to bring in info on most recent order

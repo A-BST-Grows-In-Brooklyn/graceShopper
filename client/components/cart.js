@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {StyledTableCell} from '../theme/reactTheme'
-
+import {getGuestCart} from '../store/localStorage'
 import {viewCart, addToCart, decrementCart, removeFromCart} from '../store/cart'
 import {fetchOrder} from '../store/orders'
 
