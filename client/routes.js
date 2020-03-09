@@ -8,6 +8,7 @@ import {
   UserHome,
   Home,
   Cart,
+  GuestCart,
   connectedToAllSlimes,
   connectedToSingleSlime
 } from './components'

@@ -2,8 +2,17 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {StyledTableCell} from '../theme/reactTheme'
 
-import {viewCart, addToCart, decrementCart, removeFromCart} from '../store/cart'
-import {fetchOrder} from '../store/orders'
+import {
+  setGuestCart,
+  setGuestOrder,
+  getGuestCart,
+  getGuestOrder,
+  addToGuestCart,
+  decrementGuestCart,
+  removeFromGuestCart,
+  clearGuestCart
+} from '../store/localStorage'
+import {viewOrder} from '../store/order'
 
 import {
   Table,
@@ -17,40 +26,46 @@ import {
   Paper,
   Button,
   IconButton,
-  Tab,
-  Link
+  Tab
 } from '@material-ui/core'
 import RemoveCircleOutlinedIcon from '@material-ui/icons/RemoveCircleOutlined'
 import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined'
 import HighlightOffTwoToneIcon from '@material-ui/icons/HighlightOffTwoTone'
-import {Redirect} from 'react-router-dom'
 
-class Cart extends React.Component {
+export default class GuestCart extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      cart: [],
+      order: {}
+    }
+  }
+
   componentDidMount() {
-    this.props.fetchOrder()
-    this.props.viewCart()
+    const guestCart = getGuestCart()
+    const guestOrder = getGuestOrder()
+    this.setState({cart: guestCart, order: guestOrder})
   }
 
   render() {
-    const order = this.props.order
-    // const items = this.props.cart
-    const items = getGuestCart()
+    const order = this.state.order
+    const items = this.state.cart
 
     const comboFuncAdd = async id => {
       await this.props.addToCart(id, 1)
       await this.props.viewCart()
-      await this.props.fetchOrder()
+      await this.props.viewOrder()
     }
 
     const comboFuncRemove = async id => {
       await this.props.decrementCart(id, 1)
       await this.props.viewCart()
-      await this.props.fetchOrder()
+      await this.props.viewOrder()
     }
 
     const comboFuncRemoveAll = async id => {
       await this.props.removeFromCart(id)
-      await this.props.fetchOrder()
+      await this.props.viewOrder()
     }
 
     return (
@@ -118,7 +133,7 @@ class Cart extends React.Component {
                 <TableCell align="center">${order.totalPrice}</TableCell>
                 <TableCell align="center">
                   <Button variant="contained" color="primary">
-                    <Link href="/checkout">Checkout</Link>
+                    Checkout
                   </Button>
                 </TableCell>
               </TableRow>
@@ -129,22 +144,3 @@ class Cart extends React.Component {
     )
   }
 }
-
-const mapStateToProps = state => {
-  return {
-    cart: state.cart,
-    order: state.orders.order
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    viewCart: () => dispatch(viewCart()),
-    fetchOrder: () => dispatch(fetchOrder()),
-    addToCart: (id, quantity) => dispatch(addToCart(id, quantity)),
-    decrementCart: (id, quantity) => dispatch(decrementCart(id, quantity)),
-    removeFromCart: itemId => dispatch(removeFromCart(itemId))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Cart)

@@ -1,11 +1,4 @@
 import axios from 'axios'
-import {
-  setGuestCart,
-  getGuestCart,
-  addToGuestCart,
-  removeFromGuestCart,
-  clearGuestCart
-} from './localStorage'
 
 const GET_CART = 'GET_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
@@ -23,8 +16,6 @@ export const removeItem = itemId => ({type: REMOVE_ITEM, itemId})
 export const viewCart = () => {
   return async (dispatch, next) => {
     try {
-      getGuestCart()
-      console.log(localStorage)
       const {data} = await axios.get('/api/cart')
       dispatch(getCart(data))
     } catch (error) {
@@ -36,8 +27,6 @@ export const viewCart = () => {
 export const addToCart = (itemId, quantity) => {
   return async (dispatch, next) => {
     const itemToAdd = {itemId: itemId, quantity: quantity}
-    addToGuestCart(itemToAdd)
-    console.log(localStorage)
     try {
       const {data} = await axios.put(`/api/cart/add`, itemToAdd)
       dispatch(addItem(data))
