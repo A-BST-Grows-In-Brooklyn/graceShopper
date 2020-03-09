@@ -4,7 +4,9 @@ import {StyledTableCell} from '../theme/reactTheme'
 
 import {
   setGuestCart,
+  setGuestOrder,
   getGuestCart,
+  getGuestOrder,
   addToGuestCart,
   decrementGuestCart,
   removeFromGuestCart,
@@ -30,14 +32,24 @@ import RemoveCircleOutlinedIcon from '@material-ui/icons/RemoveCircleOutlined'
 import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined'
 import HighlightOffTwoToneIcon from '@material-ui/icons/HighlightOffTwoTone'
 
-class GuestCart extends React.Component {
+export default class GuestCart extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      cart: [],
+      order: {}
+    }
+  }
+
   componentDidMount() {
-    getGuestCart()
+    const guestCart = getGuestCart()
+    const guestOrder = getGuestOrder()
+    this.setState({cart: guestCart, order: guestOrder})
   }
 
   render() {
-    const order = this.props.order
-    const items = localStorage.guestCart
+    const order = this.state.order
+    const items = this.state.cart
 
     const comboFuncAdd = async id => {
       await this.props.addToCart(id, 1)
@@ -132,23 +144,3 @@ class GuestCart extends React.Component {
     )
   }
 }
-
-const mapStateToProps = state => {
-  return {
-    cart: state.cart,
-    order: state.order
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    viewCart: () => dispatch(viewCart()),
-    viewOrder: () => dispatch(viewOrder()),
-    addToCart: (id, quantity) => dispatch(addToCart(id, quantity)),
-    decrementCart: (id, quantity) => dispatch(decrementCart(id, quantity)),
-
-    removeFromCart: itemId => dispatch(removeFromCart(itemId))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(GuestCart)

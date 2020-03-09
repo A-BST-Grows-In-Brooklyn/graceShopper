@@ -8,6 +8,7 @@ import {
   UserHome,
   Home,
   Cart,
+  GuestCart,
   connectedToAllSlimes,
   connectedToSingleSlime
 } from './components'
@@ -37,6 +38,7 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/cart" component={Cart} />
+        <Route path="/guest" component={GuestCart} />
         <Route exact path="/" component={Home} />
         {loggedInUserAccess}
       </Switch>

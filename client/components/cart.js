@@ -3,6 +3,16 @@ import {connect} from 'react-redux'
 import {StyledTableCell} from '../theme/reactTheme'
 
 import {viewCart, addToCart, decrementCart, removeFromCart} from '../store/cart'
+import {
+  setGuestCart,
+  setGuestOrder,
+  getGuestCart,
+  getGuestOrder,
+  addToGuestCart,
+  decrementGuestCart,
+  removeFromGuestCart,
+  clearGuestCart
+} from '../store/localStorage'
 import {viewOrder} from '../store/order'
 
 import {
@@ -27,12 +37,12 @@ class Cart extends React.Component {
   componentDidMount() {
     this.props.viewOrder()
     this.props.viewCart()
-    getGuestCart()
   }
 
   render() {
     const order = this.props.order
-    const items = this.props.cart
+    // const items = this.props.cart
+    const items = getGuestCart()
 
     const comboFuncAdd = async id => {
       await this.props.addToCart(id, 1)

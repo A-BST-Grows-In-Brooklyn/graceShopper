@@ -7,6 +7,15 @@ export const setGuestCart = (cartValue = []) => {
   }
 }
 
+export const setGuestOrder = (orderValue = {}) => {
+  try {
+    const serializedOrder = JSON.stringify(orderValue)
+    localStorage.setItem('guestOrder', serializedOrder)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 export const getGuestCart = () => {
   try {
     if (localStorage.guestCart === undefined) {
@@ -14,6 +23,18 @@ export const getGuestCart = () => {
     }
     const serializedCart = localStorage.getItem('guestCart')
     return JSON.parse(serializedCart)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const getGuestOrder = () => {
+  try {
+    if (localStorage.guestOrder === undefined) {
+      setGuestOrder({})
+    }
+    const serializedOrder = localStorage.getItem('guestOrder')
+    return JSON.parse(serializedOrder)
   } catch (error) {
     console.error(error)
   }
@@ -48,6 +69,24 @@ export const addToGuestCart = itemToAdd => {
     console.error(error)
   }
 }
+
+// export const addToGuestOrder = () => {
+//   try {
+//     const serializedOrder = getGuestOrder()
+//     {
+//       id: 1,
+//       userId: 101,
+//       totalPrice: 105,
+//       totalQuantity: 3,
+//       completed: false,
+//       address: "No address given"
+//     }
+
+//     setGuestOrder(serializedOrder)
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
 
 export const decrementGuestCart = itemId => {
   try {
