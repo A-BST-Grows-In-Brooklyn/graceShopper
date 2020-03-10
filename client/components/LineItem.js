@@ -5,6 +5,7 @@ const LineItem = props => {
     <div>
       <div key={props.lineItem.id} />
       Slime: {props.lineItem.slime.name}
+      Quantity: {props.lineItem.quantity}
     </div>
   )
 }
