@@ -4,7 +4,7 @@ const Slime = db.model('slime')
 const User = db.model('user')
 const Order = db.model('order')
 
-describe.only('Line Item + Order model', () => {
+describe('Line Item + Order model', () => {
   let slime
   let user
   let order

@@ -10,27 +10,13 @@ describe('Slime model', () => {
       name: 'Slimey',
       color: 'blue',
       texture: 'cloud',
-      price: 5,
+      price: 500,
       quantity: 100,
       imgURL:
         'https://www.savynaturalista.com/wp-content/uploads/Green-SLime-No-glue_.jpg'
     }
   })
   afterEach(() => db.sync({force: true}))
-
-  it('has fields name, color, texture, price, quantity, imageURL', async () => {
-    slime.notARealAttribute = 'does not compute'
-    const savedSlime = await Slime.create(slime)
-    expect(savedSlime.name).to.equal('Slimey')
-    expect(savedSlime.color).to.equal('blue')
-    expect(savedSlime.texture).to.equal('cloud')
-    expect(savedSlime.price).to.equal('5.00')
-    expect(savedSlime.quantity).to.equal(100)
-    expect(savedSlime.imgURL).to.equal(
-      'https://www.savynaturalista.com/wp-content/uploads/Green-SLime-No-glue_.jpg'
-    )
-    expect(savedSlime.notARealAttribute).to.equal(undefined)
-  })
 
   it('requires `name`', async () => {
     slime.name = null
@@ -56,5 +42,19 @@ describe('Slime model', () => {
     slime.texture = 'cloud'
     const defaultTextureSlime = await Slime.create(slime)
     expect(defaultTextureSlime.texture).to.equal('cloud')
+  })
+
+  it('should default quantity to 100 if no number is specified', async () => {
+    slime.quantity = undefined
+    const badQuantitySlime = await Slime.create(slime)
+    expect(badQuantitySlime.quantity).to.equal(100)
+  })
+
+  it('should default imageURL to specified link if no URL link is specified', async () => {
+    slime.imgURL = undefined
+    const badImgURLSlime = await Slime.create(slime)
+    expect(badImgURLSlime.imgURL).to.equal(
+      'https://cdn.shopify.com/s/files/1/0023/9514/4236/products/Facetune_26-02-2020-21-42-25_grande.jpg?v=1582978921'
+    )
   })
 })
