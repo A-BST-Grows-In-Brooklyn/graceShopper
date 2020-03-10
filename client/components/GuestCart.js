@@ -7,6 +7,7 @@ import {
   getGuestCart,
   getGuestOrder,
   addToGuestCart,
+  updateGuestOrder,
   decrementGuestCart,
   removeFromGuestCart
 } from '../store/localStorage'
