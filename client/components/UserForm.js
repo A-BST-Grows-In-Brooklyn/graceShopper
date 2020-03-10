@@ -16,8 +16,8 @@ class UserForm extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  async componentDidMount() {
-    await this.props.me()
+  componentDidMount() {
+    this.props.me()
     let user = this.props.user
     this.setState({
       name: user.name,
@@ -84,12 +84,12 @@ class UserForm extends React.Component {
             placeholder="Field Required"
           />
         </div>
-        {this.props.edit ? (
+        {
           <button type="submit" onClick={this.handleSubmit}>
             {' '}
             Update
           </button>
-        ) : null}
+        }
       </form>
     )
   }

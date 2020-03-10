@@ -1,8 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchCompletedOrders} from '../store'
-import OrderHistoryList from './OrderHistoryList'
 import setDecimals from '../helperFuncs'
+import {Link} from 'react-router-dom'
 
 class OrderHistory extends React.Component {
   componentDidMount() {
@@ -13,11 +13,11 @@ class OrderHistory extends React.Component {
     return this.props.completedOrders.map(order => {
       return (
         <div key={order.id}>
-          <div>Id: {order.id}</div>
-          <div>Total Quantity: {order.totalQuantity}</div>
-          <div>Total Price: {setDecimals(order.totalPrice)}</div>
-
-          {/* <OrderHistoryList order={order} /> */}
+          <Link to={`/orderhistorylist/${order.id}`} key={order.id}>
+            <div>Id: {order.id}</div>
+            <div>Total Quantity: {order.totalQuantity}</div>
+            <div>Total Price: {setDecimals(order.totalPrice)}</div>
+          </Link>
         </div>
       )
     })

@@ -13,6 +13,7 @@ import {
 } from './components'
 import Confirmation from './components/confirmation'
 import Checkout from './components/checkout'
+import OrderHistoryList from './components/orderhistorylist'
 import {me} from './store'
 
 /**
@@ -28,6 +29,7 @@ class Routes extends Component {
 
     return (
       <Switch>
+        <Route path="/orderHistoryList/:orderId" component={OrderHistoryList} />
         <Route exact path="/slimes" component={connectedToAllSlimes} />
         <Route path="/slimes/:id" component={connectedToSingleSlime} />
         <Route path="/home" component={UserHome} />
