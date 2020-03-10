@@ -8,11 +8,17 @@ class LineItem extends React.Component {
   }
 
   render() {
+    console.log(this.props.selectedSlime)
     return (
-      <div>
-        {console.log('SLIMEOBJECT:', this.props.selectedSlime)}
-        Slime: {this.props.selectedSlime.name}
-        Quanity: {this.props.lineItem.quantity}
+      <div key={this.props.lineItem.id}>
+        Slime:{' '}
+        {this.props.selectedSlime.id === this.props.lineItem.slimeId
+          ? this.props.selectedSlime.name
+          : null}
+        Quanity:{' '}
+        {this.props.selectedSlime.id === this.props.lineItem.slimeId
+          ? this.props.lineItem.quantity
+          : null}
       </div>
     )
   }

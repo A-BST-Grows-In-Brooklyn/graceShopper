@@ -20,7 +20,7 @@ class Checkout extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.completeOrder(this.props.orders.id)
+    this.props.completeOrder(this.props.orders.id, this.props.address)
     history.push('/confirmation/:orderId')
   }
 
@@ -30,7 +30,7 @@ class Checkout extends React.Component {
         <h1>Order Summary</h1>
         <h2>1. Shipping Address</h2>
         <div>
-          <UserForm />
+          <UserForm checkout={true} />
         </div>
 
         <form id="checkout-form" onSubmit={this.handleSubmit}>
@@ -60,13 +60,14 @@ class Checkout extends React.Component {
 
 const mapStateToProps = state => ({
   cart: state.cart,
-  orders: state.orders.order
+  orders: state.orders.order,
+  address: state.orders.address
 })
 
 const mapDispatchToProps = dispatch => ({
   viewCart: () => dispatch(viewCart()),
   fetchOrder: () => dispatch(fetchOrder()),
-  completeOrder: id => dispatch(completeOrder(id))
+  completeOrder: (id, address) => dispatch(completeOrder(id, address))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)

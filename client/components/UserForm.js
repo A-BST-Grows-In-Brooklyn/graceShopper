@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {me, updateInfo} from '../store'
+import {updateOrderAddress} from '../store'
 
 class UserForm extends React.Component {
   constructor() {
@@ -12,7 +13,7 @@ class UserForm extends React.Component {
       state: '',
       country: ''
     }
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleUpdate = this.handleUpdate.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
@@ -34,14 +35,21 @@ class UserForm extends React.Component {
     })
   }
 
-  handleSubmit(event) {
+  handleUpdate(event) {
     event.preventDefault()
-    this.props.updateInfo(this.props.user.id, this.state)
+    this.props.checkout
+      ? this.props.updateOrderAddress([
+          this.state.streetAddress,
+          this.state.city,
+          this.state.state,
+          this.state.country
+        ])
+      : this.props.updateInfo(this.props.user.id, this.state)
   }
 
   render() {
     return (
-      <form id="user-form" onSubmit={this.handleSubmit}>
+      <form id="user-form" onSubmit={this.handleUpdate}>
         <div>
           <label htmlFor="name">Name</label>
           <input
@@ -101,7 +109,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   me: () => dispatch(me()),
-  updateInfo: (id, updatedInfo) => dispatch(updateInfo(id, updatedInfo))
+  updateInfo: (id, updatedInfo) => dispatch(updateInfo(id, updatedInfo)),
+  updateOrderAddress: address => dispatch(updateOrderAddress(address))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserForm)

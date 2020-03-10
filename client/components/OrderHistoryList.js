@@ -8,18 +8,28 @@ class OrderHistoryList extends React.Component {
     this.props.fetchLineItemsByOrder(this.props.match.params.orderId)
   }
 
+  // map = async (items) => {
+  //   for (let i = 0; i < items.length; i++) {
+  //     if (!item) {
+  //       return null;
+  //     } else {
+  //       return <LineItem slimeId={items[i].slimeId} lineItem={items[i]} />
+  //     }
+  //   }
+  // }
+
   render() {
+    console.log(this.props.lineItems)
     return (
       <div>
         {this.props.lineItems
-          ? this.props.lineItems.map(lineItem => {
-              return (
-                <div key={lineItem.id}>
-                  {console.log('LINEITEM:', lineItem)}
-                  <LineItem slimeId={lineItem.slimeId} lineItem={lineItem} />
-                </div>
-              )
-            })
+          ? this.props.lineItems.map(lineItem => (
+              <LineItem
+                key={lineItem.id}
+                slimeId={lineItem.slimeId}
+                lineItem={lineItem}
+              />
+            ))
           : null}
       </div>
     )
