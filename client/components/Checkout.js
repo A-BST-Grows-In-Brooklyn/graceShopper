@@ -5,6 +5,7 @@ import {viewCart} from '../store/cart'
 import {fetchOrder, completeOrder, me} from '../store'
 import UserForm from './userform'
 import ReviewItems from './ReviewItems'
+import setDecimals from '../helperFuncs'
 
 class Checkout extends React.Component {
   constructor() {
@@ -38,6 +39,10 @@ class Checkout extends React.Component {
     })
   }
 
+  // setDecimals (number) {
+  //   return (number/100).toFixed(2)
+  // }
+
   render() {
     if (this.state.submitted === true) {
       return <Redirect to="/confirmation/:orderId" />
@@ -62,10 +67,10 @@ class Checkout extends React.Component {
         </div>
 
         <h2>4. Order Total</h2>
-        <p>Subtotal: {`$ ${this.props.orders.totalPrice}`}</p>
+        <p>Subtotal: {`$ ${setDecimals(this.props.orders.totalPrice)}`}</p>
         <p>Shipping:</p>
         <p>Tax:</p>
-        <p>Order Total: {`$ ${this.props.orders.totalPrice}`}</p>
+        <p>Order Total: {`$ ${setDecimals(this.props.orders.totalPrice)}`}</p>
 
         {/* If not a user we can add a field to add a password and create user. */}
 

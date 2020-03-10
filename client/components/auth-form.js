@@ -6,6 +6,7 @@ import {auth} from '../store'
 /**
  * COMPONENT
  */
+
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
@@ -64,7 +65,11 @@ const mapDispatch = dispatch => {
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
+      if (/\S+@\S+\.\S+/.test(email)) {
+        dispatch(auth(email, password, formName))
+      } else {
+        alert('Not a valid email')
+      }
     }
   }
 }

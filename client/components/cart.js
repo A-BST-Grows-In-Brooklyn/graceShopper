@@ -21,6 +21,8 @@ import {
 import RemoveCircleOutlinedIcon from '@material-ui/icons/RemoveCircleOutlined'
 import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined'
 import HighlightOffTwoToneIcon from '@material-ui/icons/HighlightOffTwoTone'
+import {Redirect} from 'react-router-dom'
+import setDecimals from '../helperFuncs'
 import {Link} from 'react-router-dom'
 
 class Cart extends React.Component {
@@ -97,7 +99,9 @@ class Cart extends React.Component {
                       <AddCircleOutlinedIcon fontSize="large" />
                     </IconButton>
                   </TableCell>
-                  <TableCell align="center">${item.totalPrice}</TableCell>
+                  <TableCell align="center">
+                    ${setDecimals(item.totalPrice)}
+                  </TableCell>
                   <TableCell align="center">
                     <IconButton
                       color="primary"
@@ -112,7 +116,9 @@ class Cart extends React.Component {
               <TableRow>
                 <TableCell align="center">Totals --</TableCell>
                 <TableCell align="center">{order.totalQuantity}</TableCell>
-                <TableCell align="center">${order.totalPrice}</TableCell>
+                <TableCell align="center">
+                  ${setDecimals(order.totalPrice)}
+                </TableCell>
                 <TableCell align="center">
                   <Button
                     variant="contained"

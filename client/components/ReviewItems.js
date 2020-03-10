@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {viewCart} from '../store/cart'
+import setDecimals from '../helperFuncs'
 
 class ReviewItems extends React.Component {
   componentDidMount() {
@@ -15,7 +16,7 @@ class ReviewItems extends React.Component {
           return (
             <div key={item.id}>
               <div>Product: {item.slime.name} </div>
-              <div>Price: ${item.totalPrice}</div>
+              <div>Price: ${setDecimals(item.totalPrice)}</div>
               <div>Quantity: {item.quantity}</div>
             </div>
           )
