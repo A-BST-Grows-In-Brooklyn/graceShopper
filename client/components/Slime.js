@@ -10,10 +10,10 @@ export const Slime = props => {
   return (
     <Grid key={slime.id} item>
       <Paper>
-        <Link to={`/slimes/${slime.id}`}>
+        <Link to={`/slimes/${slime.id}`} id="singleSlimeList">
           <img src={slime.imgURL} alt="Slime Photo" width="200" height="200" />
-          {slime.name}
-          {setDecimals(slime.price)}
+          <div id="singleSlimeText">{slime.name}</div>
+          <div id="singleSlimeText">{setDecimals(slime.price)}</div>
         </Link>
       </Paper>
     </Grid>

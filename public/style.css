@@ -42,6 +42,10 @@ form div {
   margin-top: 3em;
 }
 
+#singleSlimeList {
+  display: flex;
+  flex-direction: column;
+}
 #slimeCartItem {
   display: flex;
   flex-direction: column;
