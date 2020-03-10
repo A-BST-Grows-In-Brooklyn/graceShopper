@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-
 import {AppBar, Toolbar, Button, IconButton, TextField} from '@material-ui/core'
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded'
 import ShoppingBasketTwoToneIcon from '@material-ui/icons/ShoppingBasketTwoTone'
@@ -14,10 +13,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       <div id="header">
         <div id="home">
           <IconButton component={Link} to="/">
-            <img
-              id="slimeIcon"
-              src="https://vignette.wikia.nocookie.net/slimerancher/images/c/c9/Pink_Slime_SecretStyle_SP.png/revision/latest?cb=20190619001120"
-            />
+            <img id="slimeIcon" src="https://i.imgur.com/pOwAtIE.png" />
           </IconButton>
         </div>
         <Button component={Link} to="/slimes">
