@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 import {fetchSlimes} from '../store'
 import {Slime} from './Slime'
 
+import Grid from '@material-ui/core/Grid'
+
 class AllSlimes extends React.Component {
   componentDidMount() {
     this.props.fetchSlimes()
@@ -14,7 +16,13 @@ class AllSlimes extends React.Component {
     return (
       <div>
         <h1>See All Slimes</h1>
-        {slimes.map(slime => <Slime key={slime.id} slime={slime} />)}
+        <Grid container>
+          <Grid item xs={12}>
+            <Grid container justify="center" spacing={3}>
+              {slimes.map(slime => <Slime key={slime.id} slime={slime} />)}
+            </Grid>
+          </Grid>
+        </Grid>
       </div>
     )
   }
