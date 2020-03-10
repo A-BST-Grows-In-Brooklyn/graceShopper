@@ -29,14 +29,11 @@ class Cart extends React.Component {
   componentDidMount() {
     this.props.fetchOrder()
     this.props.viewCart()
-    getGuestCart()
-    updateGuestOrder()
   }
 
   render() {
-    const order = getGuestOrder()
-    // const items = this.props.cart
-    const items = getGuestCart()
+    const order = this.props.order
+    const items = this.props.cart
 
     const comboFuncAdd = async id => {
       await this.props.addToCart(id, 1)
@@ -92,8 +89,6 @@ class Cart extends React.Component {
                       color="primary"
                       onClick={() => {
                         comboFuncRemove(item.slimeId)
-                        decrementGuestCart(item.slimeId)
-                        updateGuestOrder()
                       }}
                     >
                       <RemoveCircleOutlinedIcon fontSize="large" />
@@ -103,8 +98,6 @@ class Cart extends React.Component {
                       color="primary"
                       onClick={() => {
                         comboFuncAdd(item.slimeId)
-                        addToGuestCart(item)
-                        updateGuestOrder()
                       }}
                     >
                       <AddCircleOutlinedIcon fontSize="large" />
@@ -118,8 +111,6 @@ class Cart extends React.Component {
                       color="primary"
                       onClick={() => {
                         comboFuncRemoveAll(item.slimeId)
-                        removeFromGuestCart(item.slimeId)
-                        updateGuestOrder()
                       }}
                     >
                       <HighlightOffTwoToneIcon fontSize="large" />

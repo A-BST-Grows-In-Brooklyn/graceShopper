@@ -66,11 +66,14 @@ export const decrementGuestCart = itemId => {
     )
     if (serializedCart[itemToDecrement].quantity > 1) {
       serializedCart[itemToDecrement].quantity -= 1
+      serializedCart[itemToDecrement].totalPrice -=
+        serializedCart[itemToDecrement].slime.price
     } else {
       serializedCart[itemToDecrement].quantity = 1
+      serializedCart[itemToDecrement].totalPrice =
+        serializedCart[itemToDecrement].slime.price
     }
     setGuestCart(serializedCart)
-    getGuestCart()
   } catch (error) {
     console.error(error)
   }
@@ -84,7 +87,6 @@ export const removeFromGuestCart = itemId => {
     )
     serializedCart.splice(itemToRemove, 1)
     setGuestCart(serializedCart)
-    getGuestCart()
   } catch (error) {
     console.error(error)
   }

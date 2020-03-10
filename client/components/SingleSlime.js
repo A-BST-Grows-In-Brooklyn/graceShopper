@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSelectedSlime, addToCart} from '../store'
-import {addToGuestCart} from '../store/localStorage'
+import {addToGuestCart, updateGuestOrder} from '../store/localStorage'
 
 import {Button} from '@material-ui/core'
 import setDecimals from '../helperFuncs'
@@ -27,6 +27,7 @@ class SingleSlime extends React.Component {
           onClick={() => {
             this.props.addToCart(slime.id, 1)
             addToGuestCart(slime)
+            updateGuestOrder()
           }}
         >
           Add to Cart
