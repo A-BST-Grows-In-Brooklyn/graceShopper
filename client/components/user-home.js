@@ -16,9 +16,8 @@ export const UserHome = props => {
       <h1>Hello, {user.name}!</h1>
       <h2>Your Account Information</h2>
       <h3>Primary Shipping Address</h3>
-      <UserForm edit={true} />
+      <UserForm />
       <h3>Primary Payment Information</h3>
-      <h3>Email & Password</h3>
       <h2>Your Order History</h2>
       <OrderHistory />
     </div>

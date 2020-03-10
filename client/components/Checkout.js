@@ -11,15 +11,12 @@ import {viewCart, fetchOrder, completeOrder, me} from '../store'
 import UserForm from './userform'
 import ReviewItems from './ReviewItems'
 import setDecimals from '../helperFuncs'
+import history from '../history'
 
 class Checkout extends React.Component {
   constructor() {
     super()
-    this.state = {
-      submitted: false
-    }
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleChange = this.handleChange.bind(this)
   }
 
   async componentDidMount() {
@@ -36,9 +33,8 @@ class Checkout extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.setState({
-      submitted: true
-    })
+    this.props.completeOrder(this.props.orders.id, this.props.address)
+    history.push('/confirmation/:orderId')
   }
 
   render() {
@@ -49,66 +45,66 @@ class Checkout extends React.Component {
     }
 
     return (
-      <form id="checkout-form" onSubmit={this.handleSubmit}>
+      <div>
         <h1>Order Summary</h1>
-
         <h2>1. Shipping Address</h2>
         <div>
-          <UserForm />
+          <UserForm checkout={true} />
         </div>
 
-        <h2>2. Payment Method</h2>
+        <form id="checkout-form" onSubmit={this.handleSubmit}>
+          <h2>2. Payment Method</h2>
 
-        {/* No need to add this right now */}
+          {/* No need to add this right now */}
 
-        <h2>3. Review Items</h2>
-        <div>
-          <ReviewItems />
-        </div>
+          <h2>3. Review Items</h2>
+          <div>
+            <ReviewItems />
+          </div>
 
-        <h2>4. Order Total</h2>
-        <p>
-          Subtotal:{' '}
-          {isLoggedIn
-            ? `$ ${setDecimals(this.props.orders.totalPrice)}`
-            : '$' + setDecimals(getGuestOrder().totalPrice)}
-        </p>
-        <p>Shipping:</p>
-        <p>Tax:</p>
-        <p>
-          Order Total:{' '}
-          {isLoggedIn
-            ? `$ ${setDecimals(this.props.orders.totalPrice)}`
-            : '$' + setDecimals(getGuestOrder().totalPrice)}
-        </p>
+          <h2>4. Order Total</h2>
+          <p>
+            Subtotal:{' '}
+            {isLoggedIn
+              ? `$ ${setDecimals(this.props.orders.totalPrice)}`
+              : '$' + setDecimals(getGuestOrder().totalPrice)}
+          </p>
+          <p>Shipping:</p>
+          <p>Tax:</p>
+          <p>
+            Order Total:{' '}
+            {isLoggedIn
+              ? `$ ${setDecimals(this.props.orders.totalPrice)}`
+              : '$' + setDecimals(getGuestOrder().totalPrice)}
+          </p>
 
-        <button
-          type="submit"
-          onClick={() => {
-            isLoggedIn
-              ? this.props.completeOrder(this.props.orders.id)
-              : checkoutGuestOrder(getGuestCart())
-            clearGuestCartAndOrder()
-          }}
-        >
-          Place Your Order
-        </button>
-      </form>
+          <button
+            type="submit"
+            onClick={() => {
+              isLoggedIn
+                ? this.props.completeOrder(this.props.orders.id)
+                : checkoutGuestOrder(getGuestCart())
+              clearGuestCartAndOrder()
+            }}
+          >
+            Place Your Order
+          </button>
+        </form>
+      </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  user: state.user,
   cart: state.cart,
-  orders: state.orders.order
+  orders: state.orders.order,
+  address: state.orders.address
 })
 
 const mapDispatchToProps = dispatch => ({
   viewCart: () => dispatch(viewCart()),
-  me: () => dispatch(me()),
   fetchOrder: () => dispatch(fetchOrder()),
-  completeOrder: id => dispatch(completeOrder(id))
+  completeOrder: (id, address) => dispatch(completeOrder(id, address))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)

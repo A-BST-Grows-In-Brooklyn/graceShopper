@@ -1,24 +1,19 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchLineItemsByOrder} from '../store'
-import SingleSlimeView from './SingleSlimeView'
+import {fetchSlimeLineItems} from '../store'
+import LineItem from './LineItem'
 
 class OrderHistoryList extends React.Component {
   componentDidMount() {
-    this.props.fetchLineItemsByOrder(this.props.order.id)
+    this.props.fetchSlimeLineItems(this.props.match.params.orderId)
   }
 
   render() {
     return (
       <div>
-        {this.props.lineItems
-          ? this.props.lineItems.map(lineItem => {
-              return (
-                <div key={lineItem.id}>
-                  <div>Product: {<SingleSlimeView id={lineItem.id} />} </div>
-                  <div>Quantity: {lineItem.quantity} </div>
-                </div>
-              )
+        {this.props.slimeLineItems
+          ? this.props.slimeLineItems.map(lineItem => {
+              return <LineItem key={lineItem.id} lineItem={lineItem} />
             })
           : null}
       </div>
@@ -27,11 +22,11 @@ class OrderHistoryList extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  lineItems: state.orders.lineItems
+  slimeLineItems: state.orders.slimeLineItems
 })
 
 const mapDispatch = dispatch => ({
-  fetchLineItemsByOrder: id => dispatch(fetchLineItemsByOrder(id))
+  fetchSlimeLineItems: id => dispatch(fetchSlimeLineItems(id))
 })
 
 export default connect(mapStateToProps, mapDispatch)(OrderHistoryList)
