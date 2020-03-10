@@ -123,7 +123,7 @@ export const updateGuestOrder = () => {
       userId: 0,
       totalPrice: calculateTotalPrice(getGuestCart()),
       totalQuantity: calculateTotalQuantity(getGuestCart()),
-      completed: true
+      completed: false
     }
     setGuestOrder(updatedOrder)
   } catch (error) {

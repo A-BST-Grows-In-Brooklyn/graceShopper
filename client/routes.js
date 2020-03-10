@@ -24,6 +24,13 @@ class Routes extends Component {
   render() {
     const {isLoggedIn} = this.props
 
+    let cartStatus
+    if (isLoggedIn) {
+      cartStatus = <Route path="/cart" component={Cart} />
+    } else {
+      cartStatus = <Route path="/cart" component={GuestCart} />
+    }
+
     return (
       <Switch>
         <Route exact path="/slimes" component={connectedToAllSlimes} />
@@ -31,8 +38,7 @@ class Routes extends Component {
         <Route path="/home" component={UserHome} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/cart" component={Cart} />
-        <Route path="/guest" component={GuestCart} />
+        {cartStatus}
         <Route path="/confirmation" component={Confirmation} />
         <Route path="/checkout" component={Checkout} />
         <Route exact path="/" component={Home} />
