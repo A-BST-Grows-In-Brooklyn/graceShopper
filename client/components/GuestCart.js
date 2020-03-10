@@ -19,13 +19,10 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
-  TableSortLabel,
   Paper,
   Button,
-  IconButton,
-  Tab
+  IconButton
 } from '@material-ui/core'
 import RemoveCircleOutlinedIcon from '@material-ui/icons/RemoveCircleOutlined'
 import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined'
@@ -45,7 +42,7 @@ export default class GuestCart extends React.Component {
   render() {
     const items = getGuestCart()
     const order = getGuestOrder()
-
+    console.log('check')
     const handleAdd = itemToAdd => {
       addToGuestCart(itemToAdd)
       updateGuestOrder()

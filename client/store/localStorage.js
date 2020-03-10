@@ -132,12 +132,10 @@ export const updateGuestOrder = () => {
   }
 }
 
-export const checkoutGuestOrder = items => {
-  return async () => {
-    try {
-      await axios.put('api/order/guestOrder', items)
-    } catch (error) {
-      console.error(error)
-    }
+export const checkoutGuestOrder = async items => {
+  try {
+    await axios.put('api/order/guestOrder', items)
+  } catch (error) {
+    console.error(error)
   }
 }
