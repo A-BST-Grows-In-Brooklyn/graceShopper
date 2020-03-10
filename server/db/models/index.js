@@ -19,8 +19,8 @@ const LineItem = require('./lineItem')
 
 LineItem.belongsTo(Slime, {foreignKey: 'slimeId'})
 LineItem.belongsTo(Order, {foreignKey: 'orderId'})
+
 Order.hasMany(LineItem)
-Order.belongsTo(User)
 
 module.exports = {
   User,
