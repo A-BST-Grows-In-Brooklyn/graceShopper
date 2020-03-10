@@ -2,7 +2,6 @@ const {expect} = require('chai')
 const request = require('supertest')
 const db = require('../db')
 const app = require('../index')
-const Cart = db.model('cart')
 
 describe('Cart routes', () => {
   beforeEach(() => {
@@ -10,11 +9,7 @@ describe('Cart routes', () => {
   })
 
   describe('/api/cart', () => {
-    beforeEach(() => {
-      return Cart.create({
-        quantity: 100
-      })
-    })
+    beforeEach(() => {})
 
     // it('GET /api/cart', async () => {
     //   const res = await request(app)
