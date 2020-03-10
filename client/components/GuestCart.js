@@ -4,14 +4,11 @@ import setDecimals from '../helperFuncs'
 import {Link} from 'react-router-dom'
 
 import {
-  setGuestCart,
   getGuestCart,
   getGuestOrder,
   addToGuestCart,
   decrementGuestCart,
-  removeFromGuestCart,
-  clearGuestCart,
-  updateGuestOrder
+  removeFromGuestCart
 } from '../store/localStorage'
 
 import {
@@ -118,7 +115,9 @@ export default class GuestCart extends React.Component {
                       <AddCircleOutlinedIcon fontSize="large" />
                     </IconButton>
                   </TableCell>
-                  <TableCell align="center">${item.totalPrice}</TableCell>
+                  <TableCell align="center">
+                    ${setDecimals(item.totalPrice)}
+                  </TableCell>
                   <TableCell align="center">
                     <IconButton
                       color="primary"
