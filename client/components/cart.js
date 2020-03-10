@@ -1,8 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {StyledTableCell} from '../theme/reactTheme'
 import {viewCart, addToCart, decrementCart, removeFromCart} from '../store/cart'
 import {fetchOrder} from '../store/orders'
+import setDecimals from '../helperFuncs'
 
 import {
   Table,
@@ -18,9 +20,6 @@ import {
 import RemoveCircleOutlinedIcon from '@material-ui/icons/RemoveCircleOutlined'
 import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined'
 import HighlightOffTwoToneIcon from '@material-ui/icons/HighlightOffTwoTone'
-import {Redirect} from 'react-router-dom'
-import setDecimals from '../helperFuncs'
-import {Link} from 'react-router-dom'
 
 class Cart extends React.Component {
   componentDidMount() {

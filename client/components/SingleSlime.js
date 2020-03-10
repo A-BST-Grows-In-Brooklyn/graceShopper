@@ -1,13 +1,12 @@
 import React from 'react'
-
 import {connect} from 'react-redux'
+
 import {fetchSelectedSlime, addToCart} from '../store'
+import setDecimals from '../helperFuncs'
 
 import {Button} from '@material-ui/core'
 import Grid from '@material-ui/core/Grid'
-
 import Paper from '@material-ui/core/Paper'
-import setDecimals from '../helperFuncs'
 
 class SingleSlime extends React.Component {
   componentDidMount() {
@@ -18,7 +17,7 @@ class SingleSlime extends React.Component {
     const slime = this.props.slime
 
     return (
-      <Grid item component={Paper}>
+      <div>
         <h1>{slime.name}</h1>
         <img src={slime.imgURL} alt="Slime Photo" width="200" height="200" />
         <h4>${setDecimals(slime.price)}</h4>
@@ -31,7 +30,7 @@ class SingleSlime extends React.Component {
         >
           Add to Cart
         </Button>
-      </Grid>
+      </div>
     )
   }
 }
