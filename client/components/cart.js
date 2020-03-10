@@ -1,14 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {StyledTableCell} from '../theme/reactTheme'
-import {
-  getGuestCart,
-  getGuestOrder,
-  addToGuestCart,
-  updateGuestOrder,
-  removeFromGuestCart,
-  decrementGuestCart
-} from '../store/localStorage'
 import {viewCart, addToCart, decrementCart, removeFromCart} from '../store/cart'
 import {fetchOrder} from '../store/orders'
 
@@ -24,13 +16,14 @@ import {
   Paper,
   Button,
   IconButton,
-  Tab,
-  Link
+  Tab
 } from '@material-ui/core'
 import RemoveCircleOutlinedIcon from '@material-ui/icons/RemoveCircleOutlined'
 import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined'
 import HighlightOffTwoToneIcon from '@material-ui/icons/HighlightOffTwoTone'
 import {Redirect} from 'react-router-dom'
+import setDecimals from '../helperFuncs'
+import {Link} from 'react-router-dom'
 
 class Cart extends React.Component {
   componentDidMount() {
@@ -117,7 +110,9 @@ class Cart extends React.Component {
                       <AddCircleOutlinedIcon fontSize="large" />
                     </IconButton>
                   </TableCell>
-                  <TableCell align="center">${item.totalPrice}</TableCell>
+                  <TableCell align="center">
+                    ${setDecimals(item.totalPrice)}
+                  </TableCell>
                   <TableCell align="center">
                     <IconButton
                       color="primary"
@@ -136,10 +131,17 @@ class Cart extends React.Component {
               <TableRow>
                 <TableCell align="center">Totals --</TableCell>
                 <TableCell align="center">{order.totalQuantity}</TableCell>
-                <TableCell align="center">${order.totalPrice}</TableCell>
                 <TableCell align="center">
-                  <Button variant="contained" color="primary">
-                    <Link href="/checkout">Checkout</Link>
+                  ${setDecimals(order.totalPrice)}
+                </TableCell>
+                <TableCell align="center">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    component={Link}
+                    to="/checkout"
+                  >
+                    Checkout
                   </Button>
                 </TableCell>
               </TableRow>
