@@ -87,18 +87,14 @@ class Cart extends React.Component {
                   <TableCell align="center">
                     <IconButton
                       color="primary"
-                      onClick={() => {
-                        comboFuncRemove(item.slimeId)
-                      }}
+                      onClick={() => comboFuncRemove(item.slimeId)}
                     >
                       <RemoveCircleOutlinedIcon fontSize="large" />
                     </IconButton>
                     <b id="cartText"> Quantity: {item.quantity}</b>
                     <IconButton
                       color="primary"
-                      onClick={() => {
-                        comboFuncAdd(item.slimeId)
-                      }}
+                      onClick={() => comboFuncAdd(item.slimeId)}
                     >
                       <AddCircleOutlinedIcon fontSize="large" />
                     </IconButton>
@@ -109,9 +105,7 @@ class Cart extends React.Component {
                   <TableCell align="center">
                     <IconButton
                       color="primary"
-                      onClick={() => {
-                        comboFuncRemoveAll(item.slimeId)
-                      }}
+                      onClick={() => comboFuncRemoveAll(item.slimeId)}
                     >
                       <HighlightOffTwoToneIcon fontSize="large" />
                     </IconButton>
