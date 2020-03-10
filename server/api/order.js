@@ -3,16 +3,14 @@ const {Order, LineItem, User, Slime} = require('../db/models')
 module.exports = router
 
 router.get('/slimeLineItems/:id', async (req, res, next) => {
-  // let lineItem = find the lineItem where id === req.params.id
-  // let slime = findbyId(lineItem.slimeId)
-
   try {
-    let slimes = await Slime.findAll({
-      where: {
-        slimeId: req.params.id
+    let lineItemArr = await LineItem.findAll({
+      include: {
+        model: Slime
       },
-      include: [{model: LineItem}]
+      where: {orderId: req.params.id}
     })
+    res.json(lineItemArr)
   } catch (error) {
     next(error)
   }

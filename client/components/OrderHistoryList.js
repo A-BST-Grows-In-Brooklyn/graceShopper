@@ -1,35 +1,20 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchLineItemsByOrder, fetchSelectedSlime} from '../store'
+import {fetchSlimeLineItems} from '../store'
 import LineItem from './LineItem'
 
 class OrderHistoryList extends React.Component {
   componentDidMount() {
-    this.props.fetchLineItemsByOrder(this.props.match.params.orderId)
+    this.props.fetchSlimeLineItems(this.props.match.params.orderId)
   }
 
-  // map = async (items) => {
-  //   for (let i = 0; i < items.length; i++) {
-  //     if (!item) {
-  //       return null;
-  //     } else {
-  //       return <LineItem slimeId={items[i].slimeId} lineItem={items[i]} />
-  //     }
-  //   }
-  // }
-
   render() {
-    console.log(this.props.lineItems)
     return (
       <div>
-        {this.props.lineItems
-          ? this.props.lineItems.map(lineItem => (
-              <LineItem
-                key={lineItem.id}
-                slimeId={lineItem.slimeId}
-                lineItem={lineItem}
-              />
-            ))
+        {this.props.slimeLineItems
+          ? this.props.slimeLineItems.map(lineItem => {
+              return <LineItem key={lineItem.id} lineItem={lineItem} />
+            })
           : null}
       </div>
     )
@@ -37,13 +22,11 @@ class OrderHistoryList extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  lineItems: state.orders.lineItems,
-  selectedSlime: state.slime.selectedSlime
+  slimeLineItems: state.orders.slimeLineItems
 })
 
 const mapDispatch = dispatch => ({
-  fetchLineItemsByOrder: id => dispatch(fetchLineItemsByOrder(id)),
-  fetchSelectedSlime: id => dispatch(fetchSelectedSlime(id))
+  fetchSlimeLineItems: id => dispatch(fetchSlimeLineItems(id))
 })
 
 export default connect(mapStateToProps, mapDispatch)(OrderHistoryList)
