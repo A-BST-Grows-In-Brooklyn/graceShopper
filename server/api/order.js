@@ -47,6 +47,17 @@ router.get('/lineItems/:id', async (req, res, next) => {
   }
 })
 
+router.put('/guestOrder', async (req, res, next) => {
+  try {
+    let rawLineItems = req.body
+    let guestOrder = await Order.guestOrderCreate(rawLineItems)
+
+    res.json(guestOrder)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.put('/completeOrder/:id', async (req, res, next) => {
   try {
     const itemToUpdate = await Order.findByPk(req.params.id)

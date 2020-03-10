@@ -9,7 +9,8 @@ import {
   addToGuestCart,
   updateGuestOrder,
   decrementGuestCart,
-  removeFromGuestCart
+  removeFromGuestCart,
+  checkoutGuestOrder
 } from '../store/localStorage'
 
 import {
@@ -142,6 +143,7 @@ export default class GuestCart extends React.Component {
                     color="primary"
                     component={Link}
                     to="/checkout"
+                    onClick={() => checkoutGuestOrder(items)}
                   >
                     Checkout
                   </Button>
