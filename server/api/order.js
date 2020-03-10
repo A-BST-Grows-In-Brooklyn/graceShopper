@@ -1,6 +1,22 @@
 const router = require('express').Router()
-const {Order, LineItem, User} = require('../db/models')
+const {Order, LineItem, User, Slime} = require('../db/models')
 module.exports = router
+
+router.get('/slimeLineItems/:id', async (req, res, next) => {
+  // let lineItem = find the lineItem where id === req.params.id
+  // let slime = findbyId(lineItem.slimeId)
+
+  try {
+    let slimes = await Slime.findAll({
+      where: {
+        slimeId: req.params.id
+      },
+      include: [{model: LineItem}]
+    })
+  } catch (error) {
+    next(error)
+  }
+})
 
 router.get('/', async (req, res, next) => {
   try {
@@ -49,9 +65,16 @@ router.get('/lineItems/:id', async (req, res, next) => {
 
 router.put('/completeOrder/:id', async (req, res, next) => {
   try {
+    let streetAddress = req.body[0]
+    let city = req.body[1]
+    let state = req.body[2]
+    let country = req.body[3]
     const itemToUpdate = await Order.findByPk(req.params.id)
-    await itemToUpdate.update({completed: true})
-    res.send(200)
+
+    itemToUpdate.checkOut([streetAddress, city, state, country])
+
+    // await itemToUpdate.update({completed: true, address: [streetAddress, city, state, country]})
+    // res.send(200)
   } catch (error) {
     next(error)
   }

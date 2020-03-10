@@ -158,10 +158,35 @@ Order.removeItemAll = async (slimeId, userId) => {
   }
 }
 
-Order.prototype.checkOut = async function() {
+Order.guestOrderCreate = async rawLineItems => {
+  try {
+    let firstLineItem = rawLineItems.shift()
+    let firstSlimeId = firstLineItem.slimeId
+    let firstQuantity = firstLineItem.quantity
+
+    let order = await Order.createOrderInstance(firstSlimeId, firstQuantity, 0)
+
+    for (let i = 0; i < rawLineItems.length; i++) {
+      await Order.updateOrderNewItem(
+        order,
+        rawLineItems[i].slimeId,
+        rawLineItems[i].quantity
+      )
+    }
+    return order
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+Order.prototype.checkOut = async function(addressArray) {
   try {
     this.completed = true
+    if (this.address !== addressArray) {
+      this.address = addressArray
+    }
     await this.save()
+    return this
   } catch (err) {
     console.log(err)
   }
@@ -176,4 +201,5 @@ Order.beforeSave(async function(order) {
     console.log(err)
   }
 })
+
 module.exports = Order

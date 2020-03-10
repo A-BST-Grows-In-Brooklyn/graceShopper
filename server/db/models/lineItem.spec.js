@@ -8,7 +8,6 @@ describe.only('Line Item + Order model', () => {
   let slime
   let user
   let order
-  let completeOrder
   let slime2
   before(() => db.sync({force: true}))
   beforeEach(() => {
@@ -16,7 +15,7 @@ describe.only('Line Item + Order model', () => {
       name: 'Slimey',
       color: 'blue',
       texture: 'cloud',
-      price: 5,
+      price: 500,
       quantity: 100,
       imgURL:
         'https://www.savynaturalista.com/wp-content/uploads/Green-SLime-No-glue_.jpg'
@@ -30,13 +29,13 @@ describe.only('Line Item + Order model', () => {
       userId: 1,
       totalPrice: 0,
       completed: false,
-      address: '123 Okay Lane'
+      address: ['123 Okay Lane']
     }
     slime2 = {
       name: 'Slimey2',
       color: 'purple',
       texture: 'cloud',
-      price: 10,
+      price: 1000,
       quantity: 100,
       imgURL:
         'https://www.savynaturalista.com/wp-content/uploads/Green-SLime-No-glue_.jpg'
@@ -52,7 +51,7 @@ describe.only('Line Item + Order model', () => {
     expect(savedOrder.userId).to.equal(1)
     expect(savedOrder.totalPrice).to.equal(0)
     expect(savedOrder.completed).to.equal(false)
-    expect(savedOrder.address).to.equal('123 Okay Lane')
+    expect(savedOrder.address[0]).to.equal('123 Okay Lane')
     expect(savedOrder.notARealAttribute).to.equal(undefined)
   })
 
@@ -62,11 +61,11 @@ describe.only('Line Item + Order model', () => {
     let newOrder = await Order.addItem(1, 3, 1)
     let lineItems = await newOrder.getLineItems()
     expect(newOrder.id).to.equal(1)
-    expect(newOrder.totalPrice).to.equal(15)
+    expect(newOrder.totalPrice).to.equal(1500)
     expect(newOrder.totalQuantity).to.equal(3)
     expect(lineItems[0].slimeId).to.equal(1)
     expect(lineItems[0].quantity).to.equal(3)
-    expect(lineItems[0].totalPrice).to.equal(15)
+    expect(lineItems[0].totalPrice).to.equal(1500)
   })
 
   it('checkout sets order to completed', async () => {
@@ -86,10 +85,10 @@ describe.only('Line Item + Order model', () => {
     let newOrder = await Order.addItem(1, 3, 1)
     let lineItems = await newOrder.getLineItems()
     expect(newOrder.id).to.equal(2)
-    expect(newOrder.totalPrice).to.equal(15)
+    expect(newOrder.totalPrice).to.equal(1500)
     expect(lineItems[0].slimeId).to.equal(1)
     expect(lineItems[0].quantity).to.equal(3)
-    expect(lineItems[0].totalPrice).to.equal(15)
+    expect(lineItems[0].totalPrice).to.equal(1500)
   })
 
   it('updates an order instance when item is added to cart and item is not already in cart', async () => {
@@ -100,14 +99,14 @@ describe.only('Line Item + Order model', () => {
     newOrder = await Order.addItem(2, 2, 1)
     let lineItems = await newOrder.getLineItems()
     expect(newOrder.id).to.equal(1)
-    expect(newOrder.totalPrice).to.equal(25)
+    expect(newOrder.totalPrice).to.equal(2500)
     expect(newOrder.totalQuantity).to.equal(3)
     expect(lineItems[0].slimeId).to.equal(1)
     expect(lineItems[0].quantity).to.equal(1)
-    expect(lineItems[0].totalPrice).to.equal(5)
+    expect(lineItems[0].totalPrice).to.equal(500)
     expect(lineItems[1].slimeId).to.equal(2)
     expect(lineItems[1].quantity).to.equal(2)
-    expect(lineItems[1].totalPrice).to.equal(20)
+    expect(lineItems[1].totalPrice).to.equal(2000)
   })
 
   it('updates an order instance when item is added to cart and item is already in cart', async () => {
@@ -119,13 +118,13 @@ describe.only('Line Item + Order model', () => {
     newOrder = await Order.addItem(1, 3, 1)
     let lineItems = await newOrder.getLineItems()
     expect(newOrder.id).to.equal(1)
-    expect(newOrder.totalPrice).to.equal(40)
+    expect(newOrder.totalPrice).to.equal(4000)
     expect(newOrder.totalQuantity).to.equal(7)
     expect(lineItems.length).to.equal(2)
     expect(lineItems[0].quantity).to.equal(1)
-    expect(lineItems[0].totalPrice).to.equal(10)
+    expect(lineItems[0].totalPrice).to.equal(1000)
     expect(lineItems[1].quantity).to.equal(6)
-    expect(lineItems[1].totalPrice).to.equal(30)
+    expect(lineItems[1].totalPrice).to.equal(3000)
   })
 
   it('updates an order instance when item is removed from cart', async () => {
@@ -138,7 +137,7 @@ describe.only('Line Item + Order model', () => {
     newOrder = await Order.removeItem(1, 1, 1)
     let lineItems = await newOrder.getLineItems()
     expect(newOrder.id).to.equal(1)
-    expect(newOrder.totalPrice).to.equal(35)
+    expect(newOrder.totalPrice).to.equal(3500)
     expect(newOrder.totalQuantity).to.equal(6)
     expect(lineItems.length).to.equal(2)
   })
@@ -153,7 +152,7 @@ describe.only('Line Item + Order model', () => {
     newOrder = await Order.removeItem(1, 6, 1)
     let lineItems = await newOrder.getLineItems()
     expect(newOrder.id).to.equal(1)
-    expect(newOrder.totalPrice).to.equal(10)
+    expect(newOrder.totalPrice).to.equal(1000)
     expect(newOrder.totalQuantity).to.equal(1)
     expect(lineItems.length).to.equal(1)
   })
@@ -168,8 +167,40 @@ describe.only('Line Item + Order model', () => {
     newOrder = await Order.removeItemAll(1, 1)
     let lineItems = await newOrder.getLineItems()
     expect(newOrder.id).to.equal(1)
-    expect(newOrder.totalPrice).to.equal(10)
+    expect(newOrder.totalPrice).to.equal(1000)
     expect(newOrder.totalQuantity).to.equal(1)
     expect(lineItems.length).to.equal(1)
+  })
+
+  it('guestOrderCreate creates a completed:false guest order instance', async () => {
+    let savedSlime = await Slime.create(slime)
+    let savedSlime2 = await Slime.create(slime2)
+    let newOrder = await Order.guestOrderCreate([
+      {slimeId: 1, quantity: 1},
+      {slimeId: 2, quantity: 2}
+    ])
+    let lineItems = await newOrder.getLineItems()
+    expect(newOrder.id).to.equal(1)
+    expect(newOrder.totalPrice).to.equal(2500)
+    expect(newOrder.totalQuantity).to.equal(3)
+    expect(newOrder.completed).to.equal(false)
+    expect(lineItems.length).to.equal(2)
+  })
+
+  it('guestOrderCreate works with checkOut and saves submitted address', async () => {
+    let savedSlime = await Slime.create(slime)
+    let savedSlime2 = await Slime.create(slime2)
+    let newOrder = await Order.guestOrderCreate([
+      {slimeId: 1, quantity: 1},
+      {slimeId: 2, quantity: 2}
+    ])
+    let lineItems = await newOrder.getLineItems()
+    await newOrder.checkOut(['123 New Address Way'])
+    expect(newOrder.id).to.equal(1)
+    expect(newOrder.totalPrice).to.equal(2500)
+    expect(newOrder.totalQuantity).to.equal(3)
+    expect(lineItems.length).to.equal(2)
+    expect(newOrder.completed).to.equal(true)
+    expect(newOrder.address[0]).to.equal('123 New Address Way')
   })
 })
