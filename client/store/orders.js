@@ -6,6 +6,10 @@ const GET_COMPLETED_ORDERS = 'GET_COMPLETED_ORDERS'
 
 const GET_LINE_ITEMS_BY_ORDER = 'GET_LINE_ITEMS_BY_ORDER'
 
+const UPDATE_ADDRESS = 'UPDATE_ADDRESS'
+
+const GET_SLIME_LINE_ITEMS = 'GET_SLIME_LINE_ITEMS'
+
 export const getOrder = order => ({type: GET_ORDER, order})
 
 export const getCompletedOrders = orders => ({
@@ -17,6 +21,26 @@ export const getLineItemsByOrder = lineItems => ({
   type: GET_LINE_ITEMS_BY_ORDER,
   lineItems
 })
+
+export const updateAddress = address => ({
+  type: UPDATE_ADDRESS,
+  address
+})
+
+export const getSlimeLineItems = slimes => ({
+  type: GET_SLIME_LINE_ITEMS,
+  slimes
+})
+
+export const updateOrderAddress = address => {
+  return dispatch => {
+    try {
+      dispatch(updateAddress(address))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
 
 export const fetchOrder = () => {
   return async (dispatch, next) => {
@@ -51,10 +75,21 @@ export const fetchLineItemsByOrder = id => {
   }
 }
 
-export const completeOrder = id => {
+export const completeOrder = (id, address) => {
   return async (dispatch, next) => {
     try {
-      await axios.put(`/api/order/completeOrder/${id}`, null)
+      await axios.put(`/api/order/completeOrder/${id}`, address)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
+export const fetchSlimeLineItems = lineItemId => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.get(`/api/order/slimeLineItems/${lineItemId}`)
+      dispatch(getSlimeLineItems(data))
     } catch (error) {
       console.error(error)
     }
@@ -64,7 +99,9 @@ export const completeOrder = id => {
 let initialState = {
   order: {},
   completedOrders: [],
-  lineItems: []
+  lineItems: [],
+  address: [],
+  slimeLineItems: []
 }
 /**
  * REDUCER
@@ -77,6 +114,10 @@ export default function(state = initialState, action) {
       return {...state, completedOrders: action.orders}
     case GET_LINE_ITEMS_BY_ORDER:
       return {...state, lineItems: action.lineItems}
+    case UPDATE_ADDRESS:
+      return {...state, address: action.address}
+    case GET_SLIME_LINE_ITEMS:
+      return {...state, slimeLineItems: action.slimes}
     default:
       return state
   }
