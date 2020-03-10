@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {StyledTableCell} from '../theme/reactTheme'
 import {viewCart, addToCart, decrementCart, removeFromCart} from '../store/cart'
+import {guestCartCheck} from '../store/localStorage'
 import {fetchOrder} from '../store/orders'
 
 import {
@@ -27,8 +28,9 @@ import {Link} from 'react-router-dom'
 
 class Cart extends React.Component {
   componentDidMount() {
-    this.props.fetchOrder()
     this.props.viewCart()
+    this.props.fetchOrder()
+    guestCartCheck(this.props.addToCart)
   }
 
   render() {

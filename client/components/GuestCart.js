@@ -1,7 +1,6 @@
 import React from 'react'
 import {StyledTableCell} from '../theme/reactTheme'
 import setDecimals from '../helperFuncs'
-import {Link} from 'react-router-dom'
 
 import {
   getGuestCart,
@@ -42,7 +41,7 @@ export default class GuestCart extends React.Component {
   render() {
     const items = getGuestCart()
     const order = getGuestOrder()
-    console.log('check')
+
     const handleAdd = itemToAdd => {
       addToGuestCart(itemToAdd)
       updateGuestOrder()
@@ -68,6 +67,11 @@ export default class GuestCart extends React.Component {
         guestCart: getGuestCart(),
         guestOrder: getGuestOrder()
       })
+    }
+
+    const handleSubmit = cartItems => {
+      checkoutGuestOrder(cartItems)
+      this.props.history.push('/checkout')
     }
 
     return (
@@ -138,9 +142,7 @@ export default class GuestCart extends React.Component {
                   <Button
                     variant="contained"
                     color="primary"
-                    component={Link}
-                    to="/checkout"
-                    onClick={() => checkoutGuestOrder(items)}
+                    onClick={() => handleSubmit(items)}
                   >
                     Checkout
                   </Button>

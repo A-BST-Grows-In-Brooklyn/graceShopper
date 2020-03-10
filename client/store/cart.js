@@ -59,9 +59,6 @@ export const removeFromCart = itemId => {
   }
 }
 
-/**
- * REDUCER
- */
 export default function(state = [], action) {
   switch (action.type) {
     case GET_CART:

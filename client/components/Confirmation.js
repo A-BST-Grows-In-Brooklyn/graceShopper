@@ -4,6 +4,7 @@ import {fetchOrder} from '../store'
 
 class Confirmation extends React.Component {
   render() {
+    const {isLoggedIn} = this.props
     return (
       <div>
         <h2>Thank you for your order!</h2>
