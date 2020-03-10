@@ -1,3 +1,9 @@
+import {
+  findById,
+  calculateTotalPrice,
+  calculateTotalQuantity
+} from '../../utilityFunctions'
+
 export const setGuestCart = (cartValue = []) => {
   try {
     const serializedCart = JSON.stringify(cartValue)
@@ -30,18 +36,21 @@ export const addToGuestCart = itemToAdd => {
         id: itemToAdd.id,
         slimeId: itemToAdd.id,
         quantity: 1,
+        totalPrice: Number(itemToAdd.price),
         slime: {
           id: itemToAdd.id,
           name: itemToAdd.name,
           color: itemToAdd.color,
           texture: itemToAdd.texture,
-          price: itemToAdd.price,
+          price: Number(itemToAdd.price),
           quantity: itemToAdd.quantity,
           imgURL: itemToAdd.imgURL
         }
       })
     } else {
       serializedCart[alreadyInCart].quantity += 1
+      serializedCart[alreadyInCart].totalPrice +=
+        serializedCart[alreadyInCart].slime.price
     }
     setGuestCart(serializedCart)
   } catch (error) {
@@ -55,7 +64,11 @@ export const decrementGuestCart = itemId => {
     const itemToDecrement = serializedCart.findIndex(
       item => item.slimeId === itemId
     )
-    serializedCart[itemToDecrement].quantity -= 1
+    if (serializedCart[itemToDecrement].quantity > 1) {
+      serializedCart[itemToDecrement].quantity -= 1
+    } else {
+      serializedCart[itemToDecrement].quantity = 1
+    }
     setGuestCart(serializedCart)
     getGuestCart()
   } catch (error) {
@@ -102,21 +115,16 @@ export const getGuestOrder = () => {
   }
 }
 
-// export const addToGuestOrder = () => {
-//   try {
-//     const serializedOrder = getGuestOrder()
-//     {
-//       userId: 0,
-//       totalPrice: ,
-//       totalQuantity: ,
-//       completed: true,
-//       address: [],
-//       createdAt: now,
-//       updatedAt: now
-//     }
-
-//     setGuestOrder(serializedOrder)
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
+export const updateGuestOrder = () => {
+  try {
+    const updatedOrder = {
+      userId: 0,
+      totalPrice: calculateTotalPrice(getGuestCart()),
+      totalQuantity: calculateTotalQuantity(getGuestCart()),
+      completed: true
+    }
+    setGuestOrder(updatedOrder)
+  } catch (error) {
+    console.error(error)
+  }
+}

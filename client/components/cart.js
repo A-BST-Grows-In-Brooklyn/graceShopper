@@ -3,7 +3,9 @@ import {connect} from 'react-redux'
 import {StyledTableCell} from '../theme/reactTheme'
 import {
   getGuestCart,
+  getGuestOrder,
   addToGuestCart,
+  updateGuestOrder,
   removeFromGuestCart,
   decrementGuestCart
 } from '../store/localStorage'
@@ -34,12 +36,14 @@ class Cart extends React.Component {
   componentDidMount() {
     this.props.fetchOrder()
     this.props.viewCart()
+    getGuestCart()
+    updateGuestOrder()
   }
 
   render() {
-    const order = this.props.order
-    const items = this.props.cart
-    // const items = getGuestCart()
+    const order = getGuestOrder()
+    // const items = this.props.cart
+    const items = getGuestCart()
 
     const comboFuncAdd = async id => {
       await this.props.addToCart(id, 1)
@@ -96,6 +100,7 @@ class Cart extends React.Component {
                       onClick={() => {
                         comboFuncRemove(item.slimeId)
                         decrementGuestCart(item.slimeId)
+                        updateGuestOrder()
                       }}
                     >
                       <RemoveCircleOutlinedIcon fontSize="large" />
@@ -106,7 +111,7 @@ class Cart extends React.Component {
                       onClick={() => {
                         comboFuncAdd(item.slimeId)
                         addToGuestCart(item)
-                        getGuestCart()
+                        updateGuestOrder()
                       }}
                     >
                       <AddCircleOutlinedIcon fontSize="large" />
@@ -119,6 +124,7 @@ class Cart extends React.Component {
                       onClick={() => {
                         comboFuncRemoveAll(item.slimeId)
                         removeFromGuestCart(item.slimeId)
+                        updateGuestOrder()
                       }}
                     >
                       <HighlightOffTwoToneIcon fontSize="large" />
