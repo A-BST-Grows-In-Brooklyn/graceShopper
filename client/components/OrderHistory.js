@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchCompletedOrders} from '../store'
 import OrderHistoryList from './OrderHistoryList'
+import setDecimals from '../helperFuncs'
 
 class OrderHistory extends React.Component {
   componentDidMount() {
@@ -14,7 +15,7 @@ class OrderHistory extends React.Component {
         <div key={order.id}>
           <div>Id: {order.id}</div>
           <div>Total Quantity: {order.totalQuantity}</div>
-          <div>Total Price: {order.totalPrice / 100}</div>
+          <div>Total Price: {setDecimals(order.totalPrice)}</div>
 
           {/* <OrderHistoryList order={order} /> */}
         </div>
