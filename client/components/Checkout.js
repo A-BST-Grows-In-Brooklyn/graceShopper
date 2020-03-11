@@ -9,6 +9,7 @@ import {
   clearGuestCartAndOrder
 } from '../store/localStorage'
 import UserForm from './userform'
+import GuestForm from './guestform'
 import ReviewItems from './ReviewItems'
 import setDecimals from '../helperFuncs'
 import history from '../history'
@@ -35,9 +36,7 @@ class Checkout extends React.Component {
       <div>
         <h1>Order Summary</h1>
         <h2>1. Shipping Address</h2>
-        <div>
-          <UserForm checkout={true} />
-        </div>
+        <div>{isLoggedIn ? <UserForm checkout={true} /> : <GuestForm />}</div>
 
         <form id="checkout-form" onSubmit={this.handleSubmit}>
           <h2>2. Payment Method</h2>
