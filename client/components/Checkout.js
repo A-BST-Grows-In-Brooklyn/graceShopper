@@ -31,7 +31,6 @@ class Checkout extends React.Component {
 
   render() {
     const {isLoggedIn} = this.props
-
     return (
       <div>
         <h1>Order Summary</h1>
@@ -50,7 +49,7 @@ class Checkout extends React.Component {
 
           <h2>4. Order Total</h2>
           <p>
-            Subtotal:{' '}
+            Subtotal:
             {isLoggedIn
               ? `$ ${setDecimals(this.props.orders.totalPrice)}`
               : '$' + setDecimals(getGuestOrder().totalPrice)}
@@ -58,7 +57,7 @@ class Checkout extends React.Component {
           <p>Shipping:</p>
           <p>Tax:</p>
           <p>
-            Order Total:{' '}
+            Order Total:
             {isLoggedIn
               ? `$ ${setDecimals(this.props.orders.totalPrice)}`
               : '$' + setDecimals(getGuestOrder().totalPrice)}

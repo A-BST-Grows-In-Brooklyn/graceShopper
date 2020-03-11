@@ -8,7 +8,8 @@ import {
   addToGuestCart,
   updateGuestOrder,
   decrementGuestCart,
-  removeFromGuestCart
+  removeFromGuestCart,
+  checkoutGuestOrder
 } from '../store/localStorage'
 
 import {
