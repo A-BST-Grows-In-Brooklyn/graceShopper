@@ -34,6 +34,17 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.put('/guestOrder', async (req, res, next) => {
+  try {
+    let rawLineItems = req.body
+    console.log(rawLineItems)
+    let guestOrder = await Order.guestOrderCreate(rawLineItems)
+    res.json(guestOrder)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.get('/completedOrders', async (req, res, next) => {
   try {
     const orders = await Order.findAll({

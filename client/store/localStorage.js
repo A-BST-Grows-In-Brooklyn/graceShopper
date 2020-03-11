@@ -1,8 +1,9 @@
 import {
-  findById,
   calculateTotalPrice,
   calculateTotalQuantity
 } from '../../utilityFunctions'
+
+import axios from 'axios'
 
 export const setGuestCart = (cartValue = []) => {
   try {
@@ -92,10 +93,6 @@ export const removeFromGuestCart = itemId => {
   }
 }
 
-export const clearGuestCart = () => {
-  localStorage.clear()
-}
-
 export const setGuestOrder = (orderValue = {}) => {
   try {
     const serializedOrder = JSON.stringify(orderValue)
@@ -128,5 +125,27 @@ export const updateGuestOrder = () => {
     setGuestOrder(updatedOrder)
   } catch (error) {
     console.error(error)
+  }
+}
+
+export const checkoutGuestOrder = async items => {
+  try {
+    await axios.put('api/order/guestOrder', items)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const clearGuestCartAndOrder = () => {
+  localStorage.clear()
+}
+
+export const guestCartCheck = callbackFunc => {
+  let guestCart = getGuestCart()
+  if (guestCart !== []) {
+    guestCart.forEach(item => {
+      callbackFunc(item.id, item.quantity)
+    })
+    clearGuestCartAndOrder()
   }
 }

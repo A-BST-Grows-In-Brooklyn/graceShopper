@@ -1,7 +1,13 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {viewCart} from '../store/cart'
-import {fetchOrder, completeOrder, me} from '../store'
+import {fetchOrder, completeOrder} from '../store'
+import {
+  getGuestCart,
+  getGuestOrder,
+  checkoutGuestOrder,
+  clearGuestCartAndOrder
+} from '../store/localStorage'
 import UserForm from './userform'
 import ReviewItems from './ReviewItems'
 import setDecimals from '../helperFuncs'
@@ -20,11 +26,12 @@ class Checkout extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.completeOrder(this.props.orders.id, this.props.address)
     history.push('/confirmation/:orderId')
   }
 
   render() {
+    const {isLoggedIn} = this.props
+
     return (
       <div>
         <h1>Order Summary</h1>
@@ -36,22 +43,41 @@ class Checkout extends React.Component {
         <form id="checkout-form" onSubmit={this.handleSubmit}>
           <h2>2. Payment Method</h2>
 
-          {/* No need to add this right now */}
-
           <h2>3. Review Items</h2>
           <div>
             <ReviewItems />
           </div>
 
           <h2>4. Order Total</h2>
-          <p>Subtotal: {`$ ${setDecimals(this.props.orders.totalPrice)}`}</p>
+          <p>
+            Subtotal:{' '}
+            {isLoggedIn
+              ? `$ ${setDecimals(this.props.orders.totalPrice)}`
+              : '$' + setDecimals(getGuestOrder().totalPrice)}
+          </p>
           <p>Shipping:</p>
           <p>Tax:</p>
-          <p>Order Total: {`$ ${setDecimals(this.props.orders.totalPrice)}`}</p>
+          <p>
+            Order Total:{' '}
+            {isLoggedIn
+              ? `$ ${setDecimals(this.props.orders.totalPrice)}`
+              : '$' + setDecimals(getGuestOrder().totalPrice)}
+          </p>
 
-          {/* If not a user we can add a field to add a password and create user. */}
-
-          <button type="submit">Place Your Order</button>
+          <button
+            type="submit"
+            onClick={() => {
+              isLoggedIn
+                ? this.props.completeOrder(
+                    this.props.orders.id,
+                    this.props.address
+                  )
+                : checkoutGuestOrder(getGuestCart())
+              clearGuestCartAndOrder()
+            }}
+          >
+            Place Your Order
+          </button>
         </form>
       </div>
     )
