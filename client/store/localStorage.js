@@ -134,9 +134,9 @@ export const addGuestAddress = formInput => {
   setGuestOrder(order)
 }
 
-export const checkoutGuestOrder = async items => {
+export const checkoutGuestOrder = async (items, address) => {
   try {
-    await axios.put('api/order/guestOrder', items)
+    await axios.put('api/order/guestOrder', {items: items, address: address})
   } catch (error) {
     console.error(error)
   }

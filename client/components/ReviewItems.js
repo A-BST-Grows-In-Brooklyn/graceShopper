@@ -12,9 +12,7 @@ class ReviewItems extends React.Component {
   render() {
     let items = this.props.cart
 
-    const {isLoggedIn} = this.props
-
-    if (!isLoggedIn) {
+    if (!this.props.user.email) {
       items = getGuestCart()
     }
 
@@ -36,6 +34,7 @@ class ReviewItems extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    user: state.user,
     cart: state.cart
   }
 }
