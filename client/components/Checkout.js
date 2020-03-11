@@ -36,7 +36,7 @@ class Checkout extends React.Component {
       <div>
         <h1>Order Summary</h1>
         <h2>1. Shipping Address</h2>
-        <div>{isLoggedIn ? <UserForm checkout={true} /> : <GuestForm />}</div>
+        <div>{this.props.user.email ? <UserForm /> : <GuestForm />}</div>
 
         <form id="checkout-form" onSubmit={this.handleSubmit}>
           <h2>2. Payment Method</h2>
@@ -49,7 +49,7 @@ class Checkout extends React.Component {
           <h2>4. Order Total</h2>
           <p>
             Subtotal:
-            {isLoggedIn
+            {this.props.user.email
               ? `$ ${setDecimals(this.props.orders.totalPrice)}`
               : '$' + setDecimals(getGuestOrder().totalPrice)}
           </p>
@@ -57,7 +57,7 @@ class Checkout extends React.Component {
           <p>Tax:</p>
           <p>
             Order Total:
-            {isLoggedIn
+            {this.props.user.email
               ? `$ ${setDecimals(this.props.orders.totalPrice)}`
               : '$' + setDecimals(getGuestOrder().totalPrice)}
           </p>
@@ -65,12 +65,12 @@ class Checkout extends React.Component {
           <button
             type="submit"
             onClick={() => {
-              isLoggedIn
+              this.props.user.email
                 ? this.props.completeOrder(
                     this.props.orders.id,
                     this.props.address
                   )
-                : checkoutGuestOrder(getGuestCart())
+                : checkoutGuestOrder(getGuestCart(), this.props.address)
               clearGuestCartAndOrder()
             }}
           >
@@ -83,6 +83,7 @@ class Checkout extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  user: state.user,
   cart: state.cart,
   orders: state.orders.order,
   address: state.orders.address

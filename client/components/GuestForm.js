@@ -14,18 +14,6 @@ export default class GuestForm extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  componentDidMount() {
-    this.props.me()
-    let user = this.props.user
-    this.setState({
-      name: user.name,
-      streetAddress: user.address[0],
-      city: user.address[1],
-      state: user.address[2],
-      country: user.address[3]
-    })
-  }
-
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
@@ -91,7 +79,6 @@ export default class GuestForm extends React.Component {
         </div>
         {
           <button type="submit" onClick={this.handleSubmit}>
-            {' '}
             Update
           </button>
         }

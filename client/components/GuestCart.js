@@ -73,7 +73,6 @@ export default class GuestCart extends React.Component {
     }
 
     const handleSubmit = cartItems => {
-      checkoutGuestOrder(cartItems)
       this.props.history.push('/checkout')
     }
 

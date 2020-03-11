@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {me, updateInfo} from '../store'
-import {updateOrderAddress} from '../store'
+import {me, updateInfo, updateOrderAddress} from '../store'
 
 class UserForm extends React.Component {
   constructor() {

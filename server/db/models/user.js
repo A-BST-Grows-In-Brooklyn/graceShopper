@@ -4,7 +4,8 @@ const db = require('../db')
 
 const User = db.define('user', {
   name: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: 'No name provided'
   },
   email: {
     type: Sequelize.STRING,
@@ -20,7 +21,8 @@ const User = db.define('user', {
     }
   },
   address: {
-    type: Sequelize.ARRAY(Sequelize.STRING)
+    type: Sequelize.ARRAY(Sequelize.STRING),
+    defaultValue: ['No address provided']
   },
   salt: {
     type: Sequelize.STRING,
