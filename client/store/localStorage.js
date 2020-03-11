@@ -128,6 +128,12 @@ export const updateGuestOrder = () => {
   }
 }
 
+export const addGuestAddress = formInput => {
+  let order = getGuestOrder()
+  order.address = formInput
+  setGuestOrder(order)
+}
+
 export const checkoutGuestOrder = async items => {
   try {
     await axios.put('api/order/guestOrder', items)
