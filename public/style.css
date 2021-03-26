@@ -1,0 +1,88 @@
+body {
+  font-family: sans-serif;
+  display: flex;
+}
+
+a {
+  text-decoration: none;
+}
+
+label {
+  display: block;
+}
+
+nav a {
+  display: inline-block;
+  margin: 1em;
+}
+
+form div {
+  margin: 1em;
+  display: inline-block;
+}
+
+#app {
+  width: 100%;
+}
+
+#mainBody {
+  width: 100%;
+  margin-top: 5em;
+}
+
+#header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+#cartHeader {
+  display: flex;
+  justify-content: center;
+  margin-top: 3em;
+}
+
+.singleSlimeList {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5em;
+  align-items: center;
+}
+
+.singleSlimeTextName {
+  margin: 0.5em;
+  color: #ff71ce;
+}
+.singleSlimeText {
+  margin: 0.5em;
+  color: #ff71ce;
+}
+
+#slimeCartItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#outerCartContainer {
+  margin: 2em;
+}
+
+#slimeIcon {
+  width: 3rem;
+  height: 3rem;
+}
+
+#home {
+  display: flex;
+  align-content: center;
+}
+
+#login {
+  display: flex;
+  align-content: center;
+}
+
+#userForm {
+  margin: 2em;
+}
