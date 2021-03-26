@@ -1,8 +1,7 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {me, updateInfo, updateOrderAddress} from '../store'
+import {addGuestAddress} from '../store/localStorage'
 
-class UserForm extends React.Component {
+export default class GuestForm extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -16,17 +15,7 @@ class UserForm extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  componentDidMount() {
-    this.props.me()
-    let user = this.props.user
-    this.setState({
-      name: user.name,
-      streetAddress: user.address[0],
-      city: user.address[1],
-      state: user.address[2],
-      country: user.address[3]
-    })
-  }
+  componentDidMount() {}
 
   handleChange(event) {
     this.setState({
@@ -36,19 +25,12 @@ class UserForm extends React.Component {
 
   handleUpdate(event) {
     event.preventDefault()
-    this.props.checkout
-      ? this.props.updateOrderAddress([
-          this.state.streetAddress,
-          this.state.city,
-          this.state.state,
-          this.state.country
-        ])
-      : this.props.updateInfo(this.props.user.id, this.state)
+    addGuestAddress(this.state)
   }
 
   render() {
     return (
-      <form id="user-form" onSubmit={this.handleUpdate}>
+      <form id="user-form">
         <div>
           <label htmlFor="name">Name</label>
           <input
@@ -92,8 +74,7 @@ class UserForm extends React.Component {
           />
         </div>
         {
-          <button type="submit" onClick={this.handleSubmit}>
-            {' '}
+          <button type="submit" onClick={this.handleUpdate}>
             Update
           </button>
         }
@@ -101,15 +82,3 @@ class UserForm extends React.Component {
     )
   }
 }
-
-const mapStateToProps = state => ({
-  user: state.user
-})
-
-const mapDispatchToProps = dispatch => ({
-  me: () => dispatch(me()),
-  updateInfo: (id, updatedInfo) => dispatch(updateInfo(id, updatedInfo)),
-  updateOrderAddress: address => dispatch(updateOrderAddress(address))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserForm)

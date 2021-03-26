@@ -1,14 +1,15 @@
 import React from 'react'
 import {StyledTableCell} from '../theme/reactTheme'
 import setDecimals from '../helperFuncs'
-import {Link} from 'react-router-dom'
 
 import {
   getGuestCart,
   getGuestOrder,
   addToGuestCart,
+  updateGuestOrder,
   decrementGuestCart,
-  removeFromGuestCart
+  removeFromGuestCart,
+  checkoutGuestOrder
 } from '../store/localStorage'
 
 import {
@@ -69,6 +70,10 @@ export default class GuestCart extends React.Component {
         guestCart: getGuestCart(),
         guestOrder: getGuestOrder()
       })
+    }
+
+    const handleSubmit = cartItems => {
+      this.props.history.push('/checkout')
     }
 
     return (
@@ -139,8 +144,7 @@ export default class GuestCart extends React.Component {
                   <Button
                     variant="contained"
                     color="primary"
-                    component={Link}
-                    to="/checkout"
+                    onClick={() => handleSubmit(items)}
                   >
                     Checkout
                   </Button>

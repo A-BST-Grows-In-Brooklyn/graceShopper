@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {StyledTableCell} from '../theme/reactTheme'
 import {viewCart, addToCart, decrementCart, removeFromCart} from '../store/cart'
+import {guestCartCheck} from '../store/localStorage'
 import {fetchOrder} from '../store/orders'
 import setDecimals from '../helperFuncs'
 
@@ -25,6 +26,7 @@ class Cart extends React.Component {
   componentDidMount() {
     this.props.fetchOrder()
     this.props.viewCart()
+    guestCartCheck(this.props.addToCart)
   }
 
   render() {

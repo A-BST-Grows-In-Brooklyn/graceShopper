@@ -10,6 +10,8 @@ const UPDATE_ADDRESS = 'UPDATE_ADDRESS'
 
 const GET_SLIME_LINE_ITEMS = 'GET_SLIME_LINE_ITEMS'
 
+const CLEAR_CART = 'CLEAR_CART'
+
 export const getOrder = order => ({type: GET_ORDER, order})
 
 export const getCompletedOrders = orders => ({
@@ -30,6 +32,11 @@ export const updateAddress = address => ({
 export const getSlimeLineItems = slimes => ({
   type: GET_SLIME_LINE_ITEMS,
   slimes
+})
+
+export const clearCompletedCart = cart => ({
+  type: CLEAR_CART,
+  cart
 })
 
 export const updateOrderAddress = address => {
@@ -79,6 +86,7 @@ export const completeOrder = (id, address) => {
   return async (dispatch, next) => {
     try {
       await axios.put(`/api/order/completeOrder/${id}`, address)
+      dispatch(clearCompletedCart({}))
     } catch (error) {
       console.error(error)
     }
@@ -118,6 +126,8 @@ export default function(state = initialState, action) {
       return {...state, address: action.address}
     case GET_SLIME_LINE_ITEMS:
       return {...state, slimeLineItems: action.slimes}
+    case CLEAR_CART:
+      return {...state, order: action.cart}
     default:
       return state
   }

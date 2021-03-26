@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {viewCart} from '../store/cart'
+import {getGuestCart} from '../store/localStorage'
 import setDecimals from '../helperFuncs'
 
 class ReviewItems extends React.Component {
@@ -9,7 +10,12 @@ class ReviewItems extends React.Component {
   }
 
   render() {
-    const items = this.props.cart
+    let items = this.props.cart
+
+    if (!this.props.user.email) {
+      items = getGuestCart()
+    }
+
     return (
       <div>
         {items.map(item => {
@@ -28,6 +34,7 @@ class ReviewItems extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    user: state.user,
     cart: state.cart
   }
 }

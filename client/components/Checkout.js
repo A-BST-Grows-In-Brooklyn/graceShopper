@@ -1,8 +1,15 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {viewCart} from '../store/cart'
-import {fetchOrder, completeOrder, me} from '../store'
+import {fetchOrder, completeOrder} from '../store'
+import {
+  getGuestCart,
+  getGuestOrder,
+  checkoutGuestOrder,
+  clearGuestCartAndOrder
+} from '../store/localStorage'
 import UserForm from './userform'
+import GuestForm from './guestform'
 import ReviewItems from './ReviewItems'
 import setDecimals from '../helperFuncs'
 import history from '../history'
@@ -20,23 +27,20 @@ class Checkout extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.completeOrder(this.props.orders.id, this.props.address)
     history.push('/confirmation/:orderId')
   }
 
   render() {
+    const {isLoggedIn} = this.props
+
     return (
       <div>
         <h1>Order Summary</h1>
         <h2>1. Shipping Address</h2>
-        <div>
-          <UserForm checkout={true} />
-        </div>
+        <div>{this.props.user.email ? <UserForm /> : <GuestForm />}</div>
 
         <form id="checkout-form" onSubmit={this.handleSubmit}>
           <h2>2. Payment Method</h2>
-
-          {/* No need to add this right now */}
 
           <h2>3. Review Items</h2>
           <div>
@@ -44,14 +48,35 @@ class Checkout extends React.Component {
           </div>
 
           <h2>4. Order Total</h2>
-          <p>Subtotal: {`$ ${setDecimals(this.props.orders.totalPrice)}`}</p>
+          <p>
+            Subtotal:
+            {this.props.user.email
+              ? `$ ${setDecimals(this.props.orders.totalPrice)}`
+              : '$' + setDecimals(getGuestOrder().totalPrice)}
+          </p>
           <p>Shipping:</p>
           <p>Tax:</p>
-          <p>Order Total: {`$ ${setDecimals(this.props.orders.totalPrice)}`}</p>
+          <p>
+            Order Total:
+            {this.props.user.email
+              ? `$ ${setDecimals(this.props.orders.totalPrice)}`
+              : '$' + setDecimals(getGuestOrder().totalPrice)}
+          </p>
 
-          {/* If not a user we can add a field to add a password and create user. */}
-
-          <button type="submit">Place Your Order</button>
+          <button
+            type="submit"
+            onClick={() => {
+              this.props.user.email
+                ? this.props.completeOrder(
+                    this.props.orders.id,
+                    this.props.address
+                  )
+                : checkoutGuestOrder(getGuestCart(), this.props.address)
+              clearGuestCartAndOrder()
+            }}
+          >
+            Place Your Order
+          </button>
         </form>
       </div>
     )
@@ -59,6 +84,7 @@ class Checkout extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  user: state.user,
   cart: state.cart,
   orders: state.orders.order,
   address: state.orders.address
