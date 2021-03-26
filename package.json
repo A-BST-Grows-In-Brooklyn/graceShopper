@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "the best slime shop of the century",
   "engines": {
-    "node": ">= 7.0.0"
+    "node": "12.6.0"
   },
   "main": "index.js",
   "scripts": {
