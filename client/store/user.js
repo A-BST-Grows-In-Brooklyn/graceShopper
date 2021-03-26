@@ -11,7 +11,7 @@ const UPDATE_USER = 'UPDATE_USER'
 /**
  * INITIAL STATE
  */
-const defaultUser = {}
+const defaultUser = {address: []}
 
 /**
  * ACTION CREATORS

@@ -20,11 +20,11 @@ const Order = db.define('order', {
   },
   totalPrice: {
     type: Sequelize.INTEGER,
-    default: 0
+    defaultValue: 0
   },
   totalQuantity: {
     type: Sequelize.INTEGER,
-    default: 0
+    defaultValue: 0
   },
   completed: {
     type: Sequelize.BOOLEAN,

@@ -28,7 +28,6 @@ router.get('/', async (req, res, next) => {
 //add item to cart from SingleSlime
 router.put('/add', async (req, res, next) => {
   try {
-    //destructure off of req.body
     const userId = req.user.id
     const itemId = req.body.itemId
     const quantity = req.body.quantity
